@@ -1,0 +1,61 @@
+version: "3"
+services:
+  nginx-tutorial:
+    container_name: nginx-tutorial
+    image: nginx:alpine
+    restart: always
+    network_mode: host
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/tutorial.conf
+
+  sql-server-tutorial:
+    container_name: sql-server-tutorial
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    restart: always
+    networks:
+      - tutorial-net
+    ports:
+      - "1433:1433"
+    volumes:
+      - ./AspNetTutorial/script.sql:/docker-entrypoint-initdb.d
+      - ${EXTERNAL_RESOURCES}/sql-server-tutorial:/var/opt/mssql
+    environment:
+      - MSSQL_PID=Express
+      - SA_PASSWORD=${MSSQL_PASSWORD}
+
+  asp-net-tutorial:
+    container_name: asp-net-tutorial
+    image: asp-net-tutorial-5.0
+    build: ./AspNetTutorial
+    restart: always
+    networks:
+      - tutorial-net
+    ports:
+      - "5000:5000"
+      - "5001:5001"
+    depends_on:
+      - sql-server-tutorial
+    volumes:
+      - ${EXTERNAL_RESOURCES}/asp-net-tutorial:${DOCKER_EXTERNAL_RESOURCES}/AspNetTutorialStatic
+    environment:
+      - ConnectionStrings__AspNetTutorial=${CONNECTION_STRING}
+      - StaticPath=${DOCKER_EXTERNAL_RESOURCES}
+      - SecretKey=${SECRET_KEY}
+
+  nuxt-vue-tutorial:
+    container_name: nuxt-vue-tutorial
+    image: nuxt-vue-tutorial-16.0
+    build: ./nuxt-vue-tutorial
+    restart: always
+    networks:
+      - tutorial-net
+    ports:
+      - "3000:3000"
+    depends_on:
+      - asp-net-tutorial
+    environment:
+      - API_BASE_URL=${API_BASE_URL}
+
+networks:
+  tutorial-net:
+    driver: bridge
