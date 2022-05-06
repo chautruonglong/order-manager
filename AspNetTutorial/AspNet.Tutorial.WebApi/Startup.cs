@@ -68,7 +68,7 @@ namespace AspNet.Tutorial.WebApi
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || env.IsEnvironment("Deployment"))
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();

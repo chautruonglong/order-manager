@@ -42,6 +42,8 @@ services:
     volumes:
       - ${EXTERNAL_RESOURCES}/asp-net-tutorial:${ASP_NET_DOCKER_EXTERNAL_RESOURCES}
     environment:
+      - ASPNETCORE_ENVIRONMENT=${ASP_NET_ENVIROMENT}
+      - ServerEndPoint=${ASP_NET_SERVER_END_POINT}
       - ConnectionStrings__AspNetTutorial=${CONNECTION_STRING}
       - StaticPath=${ASP_NET_DOCKER_EXTERNAL_RESOURCES}
       - SecretKey=${SECRET_KEY}
