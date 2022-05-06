@@ -18,7 +18,7 @@ services:
       - "1433:1433"
     volumes:
       # - ./AspNetTutorial/DB:/docker-entrypoint-initdb.d
-      - ${EXTERNAL_RESOURCES}/sql-server-tutorial:/var/opt/mssql
+      - ${EXTERNAL_RESOURCES}/sql-server-tutorial:/var/opt/mssql/data
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_PID=Express
@@ -32,8 +32,8 @@ services:
     networks:
       - tutorial-net
     ports:
-      - "5000:5000"
-      - "5001:5001"
+      - "5000:80"
+      - "5001:443"
     depends_on:
       - sql-server-tutorial
     volumes:
