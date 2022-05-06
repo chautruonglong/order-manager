@@ -10,4 +10,6 @@ RUN rm -rf node_modules && \
 FROM node:16.15.0-alpine3.15 AS run
 WORKDIR /app
 COPY --from=build /app .
+
+EXPOSE 80
 CMD [ "yarn", "start" ]

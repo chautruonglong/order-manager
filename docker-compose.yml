@@ -60,6 +60,7 @@ services:
     depends_on:
       - asp-net-tutorial
     environment:
+      - HOST=0.0.0.0
       - API_BASE_URL=${API_BASE_URL}
 
 networks:
