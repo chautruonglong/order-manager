@@ -40,10 +40,10 @@ services:
     depends_on:
       - sql-server-tutorial
     volumes:
-      - ${EXTERNAL_RESOURCES}/asp-net-tutorial:${DOCKER_EXTERNAL_RESOURCES}/AspNetTutorialStatic
+      - ${EXTERNAL_RESOURCES}/asp-net-tutorial:${ASP_NET_DOCKER_EXTERNAL_RESOURCES}
     environment:
       - ConnectionStrings__AspNetTutorial=${CONNECTION_STRING}
-      - StaticPath=${DOCKER_EXTERNAL_RESOURCES}
+      - StaticPath=${ASP_NET_DOCKER_EXTERNAL_RESOURCES}
       - SecretKey=${SECRET_KEY}
 
   nuxt-vue-tutorial:
