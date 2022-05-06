@@ -29,7 +29,8 @@ services:
     container_name: asp-net-tutorial
     image: asp-net-tutorial-5.0
     build:
-      dockerfile: ./AspNetTutorial/Dev.dockerfile
+      context: ./AspNetTutorial
+      dockerfile: Dev.dockerfile
     restart: always
     networks:
       - tutorial-net

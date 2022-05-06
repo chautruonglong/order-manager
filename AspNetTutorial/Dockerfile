@@ -1,10 +1,10 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /app
-COPY ["AspNetTutorial.sln", "./"]
-COPY ["AspNet.Tutorial.Testing/AspNet.Tutorial.Testing.csproj", "AspNet.Tutorial.Testing/"]
-COPY ["AspNet.Tutorial.Core/AspNet.Tutorial.Core.csproj", "AspNet.Tutorial.Core/"]
-COPY ["AspNet.Tutorial.Infrastructure/AspNet.Tutorial.Infrastructure.csproj", "AspNet.Tutorial.Infrastructure/"]
-COPY ["AspNet.Tutorial.WebApi/AspNet.Tutorial.WebApi.csproj", "AspNet.Tutorial.WebApi/"]
+COPY ["./AspNetTutorial.sln", "./"]
+COPY ["./AspNet.Tutorial.Testing/AspNet.Tutorial.Testing.csproj", "./AspNet.Tutorial.Testing/"]
+COPY ["./AspNet.Tutorial.Core/AspNet.Tutorial.Core.csproj", "./AspNet.Tutorial.Core/"]
+COPY ["./AspNet.Tutorial.Infrastructure/AspNet.Tutorial.Infrastructure.csproj", "./AspNet.Tutorial.Infrastructure/"]
+COPY ["./AspNet.Tutorial.WebApi/AspNet.Tutorial.WebApi.csproj", "./AspNet.Tutorial.WebApi/"]
 RUN dotnet restore
 COPY . .
 RUN dotnet build  -c Release -o /app/build
