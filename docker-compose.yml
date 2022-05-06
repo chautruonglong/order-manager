@@ -18,7 +18,7 @@ services:
       - "1433:1433"
     volumes:
       # - ./AspNetTutorial/DB:/docker-entrypoint-initdb.d
-      - ${EXTERNAL_RESOURCES}/sql-server-tutorial:/var/opt/mssql/data
+      - ${EXTERNAL_RESOURCES}/sql-server-tutorial:/var/opt/mssql
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_PID=Express

@@ -15,6 +15,8 @@ export SECRET_KEY="JRi824hxq7m1vjVlpE88fWxLfOfF9nszm5CiE9hWFffvSRQTZ7"
 
 export API_BASE_URL="http://api.mvg-sky.com/api"
 
+sudo chown 10001 ${EXTERNAL_RESOURCES}
+
 docker compose build
 docker compose up -d
 
