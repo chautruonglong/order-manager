@@ -2,7 +2,7 @@ import { AccessToken, Login, UserRegister } from '@/models/auth.models'
 import { User } from '@/models/user.models'
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 
-export class AuthService {
+export default class AuthService {
   constructor(private readonly $axios: NuxtAxiosInstance) {}
 
   public async login(payload: Login): Promise<AccessToken> {

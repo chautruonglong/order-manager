@@ -7,7 +7,7 @@ namespace AspNet.Tutorial.Core.DataTransfers.Products
     {
         [Required(AllowEmptyStrings = false)] public string Name { get; set; }
 
-        [Required(AllowEmptyStrings = false)] public string Image { get; set; }
+        public string Image { get; set; }
 
         [Required(AllowEmptyStrings = false)] public string Description { get; set; }
 

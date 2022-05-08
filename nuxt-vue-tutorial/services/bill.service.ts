@@ -6,7 +6,7 @@ export interface BillQueries {
   size: number
 }
 
-export class BillService {
+export default class BillService {
   constructor(private readonly $axios: NuxtAxiosInstance) {}
 
   public async fetchMany({ page, size }: BillQueries): Promise<BillOrder> {

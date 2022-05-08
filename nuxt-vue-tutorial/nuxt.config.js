@@ -1,7 +1,7 @@
 export default {
   server: {
-    host: process.env.HOST,
-    port: process.env.PORT,
+    host: process.env.HOST || '0.0.0.0',
+    port: process.env.PORT || '3000',
   },
   head: {
     title: 'Lex Shopee',
@@ -23,7 +23,7 @@ export default {
 
   css: [],
 
-  plugins: ['@/plugins/api.client.ts'],
+  plugins: ['@/plugins/api.plugin.ts'],
 
   components: true,
 
@@ -32,7 +32,7 @@ export default {
   modules: ['@nuxtjs/axios'],
 
   axios: {
-    baseURL: process.env.API_BASE_URL,
+    baseURL: process.env.API_BASE_URL || 'https://localhost:5001/api',
   },
 
   build: {

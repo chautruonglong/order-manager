@@ -1,5 +1,5 @@
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
-import { Product, ProductCreation, ProductModification } from '@/models/product.models'
+import { Product } from '@/models/product.models'
 
 export interface ProductQueries {
   page: number
@@ -8,7 +8,7 @@ export interface ProductQueries {
   sort?: string
 }
 
-export class ProductService {
+export default class ProductService {
   constructor(private readonly $axios: NuxtAxiosInstance) {}
 
   public async fetchMany({ page, size, question, sort }: ProductQueries): Promise<Product[]> {
@@ -29,12 +29,12 @@ export class ProductService {
     return await this.$axios.$get(`products/${id}`)
   }
 
-  public async create(payload: ProductCreation): Promise<Product> {
+  public async create(payload: FormData): Promise<Product> {
     return await this.$axios.$post('products', payload)
   }
 
-  public async update(payload: ProductModification): Promise<Product> {
-    return await this.$axios.$put('products', payload)
+  public async update({ id, payload }: { id: string; payload: FormData }): Promise<Product> {
+    return await this.$axios.$put(`products/${id}`, payload)
   }
 
   public async delete(id: string): Promise<Product> {

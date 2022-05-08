@@ -2,6 +2,7 @@
   <div v-if="product != null" v-show="isProductModal == true" class="fixed z-10 inset-0 overflow-y-auto h-full" role="dialog" aria-modal="true">
     <div class="flex min-h-screen text-center md:block md:px-2 lg:px-4" style="font-size: 0">
       <div class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity md:block" aria-hidden="true"></div>
+      <span class="hidden md:inline-block md:align-middle md:h-screen" aria-hidden="true">&#8203;</span>
 
       <div class="flex text-base text-left transform transition w-full md:inline-block md:max-w-2xl md:px-4 md:my-8 md:align-middle lg:max-w-4xl">
         <div class="w-full relative flex items-center bg-white px-4 pt-14 pb-8 overflow-hidden shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
@@ -30,7 +31,7 @@
                   <span class="ml-5">Delete</span>
                 </button>
                 <button
-                  id="editProductButton"
+                  @click="editButtonClick"
                   class="bg-indigo-600 border border-transparent rounded-md py-3 px-5 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   <ion-icon name="create-outline" class="text-xl"></ion-icon>
@@ -49,6 +50,8 @@
         </div>
       </div>
     </div>
+
+    <EditProduct :isEdit="true" :product="{ ...product }" />
   </div>
 </template>
 
@@ -57,13 +60,17 @@ import Vue from 'vue'
 import { mapActions, mapState, mapMutations } from 'vuex'
 import { ACTIONS } from '~/store/actions'
 import { MUTATIONS } from '~/store/mutations'
+import EditProduct from './EditProduct.vue'
 
 export default Vue.extend({
+  components: {
+    EditProduct,
+  },
   props: {
     product: Object,
   },
   computed: {
-    ...mapState(['isProductModal']),
+    ...mapState(['isProductModal', 'isAuthenticated']),
   },
   methods: {
     ...mapActions({
@@ -71,11 +78,24 @@ export default Vue.extend({
     }),
     ...mapMutations({
       showProductModal: MUTATIONS.SHOW_PRODUCT_MODAL,
+      showEditModal: MUTATIONS.SHOW_EDIT_MODAL,
     }),
 
     deleteButtonClick() {
-      this.deleteProduct(this.product.id)
-      this.showProductModal(false)
+      if (this.isAuthenticated) {
+        this.deleteProduct(this.product.id)
+        this.showProductModal(false)
+      } else {
+        this.$router.push('/login')
+      }
+    },
+
+    editButtonClick() {
+      if (this.isAuthenticated) {
+        this.showEditModal(true)
+      } else {
+        this.$router.push('/login')
+      }
     },
 
     closeModalClick() {

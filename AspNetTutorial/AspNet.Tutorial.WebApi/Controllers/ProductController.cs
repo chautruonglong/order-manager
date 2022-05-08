@@ -94,7 +94,7 @@ namespace AspNet.Tutorial.WebApi.Controllers
             string ext = Path.GetExtension(file.FileName);
             string filename = $"{Guid.NewGuid().ToString()}{ext}";
 
-            ProductCreationDto productCreationDto = new ProductCreationDto
+            ProductCreationDto productCreationDto = new()
             {
                 Name = Request.Form["name"],
                 Description = Request.Form["description"],
@@ -106,7 +106,7 @@ namespace AspNet.Tutorial.WebApi.Controllers
             Validator.ValidateObject(productCreationDto, new ValidationContext(productCreationDto));
 
             string savedPath = $"{_configuration["StaticPath"]}{Path.DirectorySeparatorChar}products{Path.DirectorySeparatorChar}{filename}";
-            using (FileStream stream = new FileStream(savedPath, FileMode.Create))
+            using (FileStream stream = new(savedPath, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
             }
@@ -117,12 +117,38 @@ namespace AspNet.Tutorial.WebApi.Controllers
 
         [Authorize]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put([FromRoute] string id, [FromBody] ProductModificationDto productModificationDto)
+        public async Task<IActionResult> Put([FromRoute] string id)
         {
             if (!Guid.TryParse(id, out Guid guid))
             {
                 throw new RecordNotFoundException("Product not found in database");
             }
+
+            ProductModificationDto productModificationDto = new()
+            {
+                Name = Request.Form["name"],
+                Description = Request.Form["description"],
+                Price = double.Parse(Request.Form["price"]),
+                Discount = double.Parse(Request.Form["discount"]),
+            };
+            
+            IFormFile file = Request.Form.Files["image"];
+
+            if (file != null)
+            {
+                string ext = Path.GetExtension(file.FileName);
+                string filename = $"{Guid.NewGuid().ToString()}{ext}";
+                string savedPath = $"{_configuration["StaticPath"]}{Path.DirectorySeparatorChar}products{Path.DirectorySeparatorChar}{filename}";
+                
+                using (FileStream stream = new(savedPath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+                
+                productModificationDto.Image = filename;
+            }
+            
+            Validator.ValidateObject(productModificationDto, new ValidationContext(productModificationDto));
 
             Product product = await _productService.Update(guid, productModificationDto);
             return Ok(_mapper.Map<ProductDto>(product));

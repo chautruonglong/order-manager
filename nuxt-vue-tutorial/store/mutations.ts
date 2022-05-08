@@ -10,6 +10,8 @@ export const MUTATIONS = {
   SET_QUESTION: 'setQuestion',
   SET_SORT: 'setSort',
   SHOW_PRODUCT_MODAL: 'showProductModal',
+  SHOW_EDIT_MODAL: 'showEditModal',
+  SET_LIST_CART: 'setListCart',
 }
 
 const mutations: MutationTree<State> = {
@@ -36,6 +38,12 @@ const mutations: MutationTree<State> = {
   },
   [MUTATIONS.SHOW_PRODUCT_MODAL](state, b) {
     state.isProductModal = b
+  },
+  [MUTATIONS.SHOW_EDIT_MODAL](state, b) {
+    state.isEditModal = b
+  },
+  [MUTATIONS.SET_LIST_CART](state, listCart) {
+    state.listCart = listCart
   },
 }
 

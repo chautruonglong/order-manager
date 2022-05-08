@@ -21,7 +21,8 @@ namespace AspNet.Tutorial.Core.Profiles
                 .ForMember(e => e.ModifiedBy, option => option.Ignore())
                 .ForMember(e => e.IsDeleted, option => option.Ignore())
                 .ForMember(e => e.CreatedAt, option => option.Ignore())
-                .ForMember(e => e.ModifiedAt, option => option.Ignore());
+                .ForMember(e => e.ModifiedAt, option => option.Ignore())
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
         }
     }
 }

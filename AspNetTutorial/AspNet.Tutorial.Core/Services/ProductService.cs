@@ -112,7 +112,11 @@ namespace AspNet.Tutorial.Core.Services
             Product product = _mapper.Map<Product>(productModificationDto);
             product.Id = id;
 
-            return await _productRepository.Update(product);
+            Product dbProduct = await _productRepository.Get(id);
+
+            _mapper.Map(product, dbProduct);
+
+            return await _productRepository.Update(dbProduct);
         }
 
         public async Task<Product> Delete(Guid id)

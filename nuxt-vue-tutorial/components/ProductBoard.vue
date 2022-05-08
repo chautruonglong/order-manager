@@ -1,9 +1,13 @@
 <template>
   <div class="bg-white">
     <div class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
-      <h2 class="text-2xl font-extrabold tracking-tight text-gray-900">Customers also purchased</h2>
+      <div class="flex items-center">
+        <h2 class="text-2xl font-extrabold tracking-tight text-gray-900 mr-2">Order by</h2>
+        <Combobox :items="['Created At', 'Modified At', 'Name']" :itemClick="orderItemClick" class="mr-2" />
+        <Combobox :items="['ASC', 'DESC']" :itemClick="directionItemClick" />
+      </div>
 
-      <div class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+      <div class="mt-20 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
         <div @click="productClick(product)" v-for="product in products" :key="product.id" class="group relative cursor-pointer">
           <div class="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
             <img :src="product.image" alt="" class="w-full h-full object-center object-cover lg:w-full lg:h-full" />
@@ -37,8 +41,13 @@ import { Product } from '~/models/product.models'
 import { ACTIONS } from '~/store/actions'
 import { MUTATIONS } from '~/store/mutations'
 import ProductModal from './ProductModal.vue'
+import Combobox from './Combobox.vue'
 
 export default Vue.extend({
+  components: {
+    Combobox,
+    ProductModal,
+  },
   data() {
     interface DataType {
       productDetail: Product | null
@@ -49,19 +58,18 @@ export default Vue.extend({
     }
     return d
   },
-  components: {
-    ProductModal,
-  },
   computed: {
-    ...mapState(['products', 'page']),
+    ...mapState(['products', 'page', 'sort']),
   },
   methods: {
     ...mapMutations({
       setPage: MUTATIONS.SET_PAGE,
       showProductModal: MUTATIONS.SHOW_PRODUCT_MODAL,
+      setSort: MUTATIONS.SET_SORT,
     }),
     ...mapActions({
       fetchProducts: ACTIONS.FETCH_PRODUCTS,
+      reorderProducts: ACTIONS.REORDER_PRODUCTS,
     }),
 
     moreClick() {
@@ -72,6 +80,19 @@ export default Vue.extend({
     productClick(product: Product) {
       this.productDetail = product
       this.showProductModal(true)
+    },
+    orderItemClick(current: string) {
+      const direction = this.sort.split('_').pop()
+      const sort = current.replace(' ', '_') + `_${direction}`
+      this.setSort(sort.toLowerCase())
+      this.reorderProducts()
+    },
+    directionItemClick(current: string) {
+      const tokens = this.sort.split('_')
+      tokens.pop()
+      const sort = tokens.join('_') + `_${current}`
+      this.setSort(sort.toLowerCase())
+      this.reorderProducts()
     },
   },
 })

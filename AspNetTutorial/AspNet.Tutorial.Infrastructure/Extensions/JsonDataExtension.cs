@@ -77,12 +77,12 @@ namespace AspNet.Tutorial.Infrastructure.Extensions
 
             if (Directory.EnumerateFiles(mediaPath).Count() == 0 && entities is IEnumerable<Product> products)
             {
-                WebClient webClient = new WebClient();
+                WebClient webClient = new();
                 foreach (Product product in products)
                 {
                     try
                     {
-                        Uri uri = new Uri(product.Image);
+                        Uri uri = new(product.Image);
                         string ext = Path.GetExtension(product.Image);
                         string fileName = $"{Guid.NewGuid().ToString()}{ext}";
                         string localFile = $"{mediaPath}{Path.DirectorySeparatorChar}{fileName}";

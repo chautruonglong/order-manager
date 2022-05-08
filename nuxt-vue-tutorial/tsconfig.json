@@ -15,7 +15,7 @@
       "~/*": ["./*"],
       "@/*": ["./*"]
     },
-    "types": ["@nuxt/types", "@nuxtjs/axios", "@types/node", "@types/jquery"],
+    "types": ["@nuxt/types", "@nuxtjs/axios", "@types/node"],
     "suppressExcessPropertyErrors": false
   },
   "exclude": ["node_modules", ".nuxt", "dist"]

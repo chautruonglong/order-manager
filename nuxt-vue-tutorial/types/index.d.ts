@@ -1,4 +1,4 @@
-import { Services } from '~/plugins/api.client'
+import { Services } from '~/plugins/api.plugin'
 
 declare module 'vuex/types/index' {
   interface Store<S> {

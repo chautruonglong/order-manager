@@ -10,6 +10,8 @@ export interface State {
   question: string
   sort: string
   isProductModal: boolean
+  isEditModal: boolean
+  listCart: Product[]
 }
 
 const state: State = {
@@ -19,8 +21,10 @@ const state: State = {
   page: 0,
   size: 40,
   question: '',
-  sort: 'modifiedAtDesc',
+  sort: 'modified_at_desc',
   isProductModal: false,
+  isEditModal: false,
+  listCart: [],
 }
 
 export default () => state
