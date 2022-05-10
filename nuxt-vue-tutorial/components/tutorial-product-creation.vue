@@ -59,6 +59,7 @@
               <div class="w-96">
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"> Image </label>
                 <input
+                  if="fileImage2"
                   class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                   type="file"
                   @change="onFileChange"
@@ -145,6 +146,8 @@ export default Vue.extend({
       } finally {
         this.mutateIsLoading(false)
         this.mutateIsShowProductCreation(false)
+        const input = document.getElementById('#fileImage2') as HTMLInputElement
+        input.value = ''
       }
     },
   },
