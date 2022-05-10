@@ -16,10 +16,15 @@ export default async ({ store, route, redirect }: Context) => {
     try {
       const accessTokens = await store.$api.auth.refresh()
 
-      setAccessToken(accessTokens.accessToken)
-      setRefreshToken(accessTokens.refreshToken)
-
-      store.commit(AUTH_MUTATIONS.MUTATE_IS_AUTHENTICATED, true, { root: true })
+      if (accessTokens) {
+        if (accessTokens.accessToken) {
+          setAccessToken(accessTokens.accessToken)
+          store.commit(AUTH_MUTATIONS.MUTATE_IS_AUTHENTICATED, true, { root: true })
+        }
+        if (accessTokens.refreshToken) {
+          setRefreshToken(accessTokens.refreshToken)
+        }
+      }
     } catch {
       store.commit(AUTH_MUTATIONS.MUTATE_IS_AUTHENTICATED, false, { root: true })
     }

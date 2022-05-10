@@ -29,6 +29,7 @@
             <div>
               <input
                 v-model="loginPayload.email"
+                @keypress.enter="signButtonClick"
                 type="email"
                 autocomplete="email"
                 required
@@ -40,6 +41,7 @@
             <div>
               <input
                 v-model="loginPayload.password"
+                @keypress.enter="signButtonClick"
                 type="password"
                 required
                 class="tw-appearance-none tw-rounded-none tw-relative tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-placeholder-gray-500 tw-text-gray-900 tw-rounded-b-md focus:tw-outline-none focus:tw-ring-indigo-500 focus:tw-border-indigo-500 focus:tw-z-10 sm:tw-text-sm"
@@ -68,6 +70,7 @@
             <div>
               <input
                 v-model="registerPayload.email"
+                @keypress.enter="signButtonClick"
                 type="email"
                 autocomplete="email"
                 required
@@ -79,6 +82,7 @@
             <div>
               <input
                 v-model="registerPayload.password"
+                @keypress.enter="signButtonClick"
                 type="password"
                 required
                 class="tw-appearance-none tw-rounded-none tw-relative tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-placeholder-gray-500 tw-text-gray-900 tw-rounded-b-md focus:tw-outline-none focus:tw-ring-indigo-500 focus:tw-border-indigo-500 focus:tw-z-10 sm:tw-text-sm"
@@ -89,6 +93,7 @@
             <div>
               <input
                 v-model="registerPayload.name"
+                @keypress.enter="signButtonClick"
                 type="text"
                 required
                 class="tw-appearance-none tw-rounded-none tw-relative tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-placeholder-gray-500 tw-text-gray-900 tw-rounded-b-md focus:tw-outline-none focus:tw-ring-indigo-500 focus:tw-border-indigo-500 focus:tw-z-10 sm:tw-text-sm"
@@ -159,7 +164,7 @@ export default Vue.extend({
         this.mutateIsLoading(true)
         if (this.isLoginForm) {
           await this.login(this.loginPayload)
-          this.$router.push('/')
+          location.replace('/')
           this.mutateSnackbar('Login successfully')
         } else {
           await this.register(this.registerPayload)

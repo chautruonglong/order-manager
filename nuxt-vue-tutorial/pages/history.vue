@@ -1,39 +1,29 @@
 <template>
   <div class="tw-mt-8 tw-w-3/5 tw-mx-auto">
     <ul class="tw-my-6 tw-divide-y tw-divide-gray-200">
-      <template v-for="(bill, index) in historyBills">
+      <template v-for="(product, index) in products">
         <li :key="index" class="tw-flex tw-py-6">
           <div class="tw-h-24 tw-w-24 tw-flex-shrink-0 tw-overflow-hidden tw-rounded-md tw-border tw-border-gray-200">
-            <img :src="bill.orders[0].product.image" alt="" class="tw-h-full tw-w-full tw-object-cover tw-object-center" />
+            <img :src="product.image" alt="" class="tw-h-full tw-w-full tw-object-cover tw-object-center" />
           </div>
 
           <div class="tw-ml-4 tw-flex tw-flex-1 tw-flex-col">
             <div>
               <div class="tw-flex tw-justify-between tw-text-base tw-font-medium tw-text-gray-900">
                 <h3>
-                  <a>{{ bill.orders[0].product.name }}</a>
+                  <a>{{ product.name }}</a>
                 </h3>
                 <div class="tw-flex tw-flex-col tw-justify-end tw-items-end">
-                  <p class="tw-ml-4">{{ bill.total }}</p>
+                  <p class="tw-ml-4">{{ product.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) }}</p>
                   <span
                     class="tw-mt-1 tw-pl-1 tw-text-sm tw-text-gray-500 tw-border-solid tw-border-2 tw-border-indigo-100 bg-slate-200"
-                    >{{ bill.orders[0].quantity }}</span
+                    >-{{ product.discount }}%</span
                   >
                 </div>
               </div>
             </div>
             <div class="tw-flex tw-flex-1 tw-items-end tw-justify-between tw-text-sm">
-              <p class="tw-text-gray-500">{{ bill.createdAt }}</p>
-
-              <div class="tw-flex">
-                <button
-                  name="removeOrderItemButton"
-                  type="button"
-                  class="tw-font-medium tw-text-indigo-600 hover:tw-text-indigo-500"
-                >
-                  Remove
-                </button>
-              </div>
+              <p class="tw-text-gray-500">{{ product.createdAt }}</p>
             </div>
           </div>
         </li>
@@ -62,6 +52,7 @@ import Vue from 'vue'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import { COMMON_MUTATIONS } from '@store/common'
 import { BILL_ACTIONS, BILL_GETTERS, BILL_MUTATIONS } from '@store/bill'
+import { Product, BillOrder, OrderProduct } from '@models'
 
 export default Vue.extend({
   data() {
@@ -74,6 +65,15 @@ export default Vue.extend({
       historyBills: BILL_GETTERS.GET_HISTORY_BILLS,
       page: BILL_GETTERS.GET_PAGE,
     }),
+    products() {
+      const products: Product[] = []
+      this.historyBills.forEach((bill: BillOrder) => {
+        bill.orders.forEach((order: OrderProduct) => {
+          products.push(order.product)
+        })
+      })
+      return products
+    },
   },
   methods: {
     ...mapMutations({
