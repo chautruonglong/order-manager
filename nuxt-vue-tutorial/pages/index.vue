@@ -1,72 +1,35 @@
 <template>
   <div>
-    <Header />
-    <ProductBoard />
+    <tutorial-products />
+    <tutorial-product-creation />
 
-    <button @click="addProductClick" class="fixed w-16 h-16 bottom-12 right-12 bg-indigo-600 rounded-full z-50 zoom">
+    <button
+      @click="addProductButtonClick"
+      class="fixed w-16 h-16 bottom-12 right-12 bg-indigo-600 rounded-full z-40 hover:scale-110"
+    >
       <ion-icon name="create-outline" class="text-3xl text-white"></ion-icon>
     </button>
-
-    <EditProduct :isEdit="false" :product="newProduct" />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import Header from '@/components/Header.vue'
-import ProductBoard from '@/components/ProductBoard.vue'
-import EditProduct from '@/components/EditProduct.vue'
-
-import { mapActions, mapState, mapMutations } from 'vuex'
-import { ACTIONS } from '~/store/actions'
-import { MUTATIONS } from '~/store/mutations'
+import { mapMutations } from 'vuex'
+import { COMMON_MUTATIONS } from '@store/common'
 
 export default Vue.extend({
-  data() {
-    return {
-      newProduct: {
-        name: '',
-        description: '',
-        price: 0,
-        discount: 0,
-        image: null,
-      },
-    }
-  },
-  components: {
-    Header,
-    ProductBoard,
-    EditProduct,
-  },
   methods: {
-    ...mapActions({
-      fetchProducts: ACTIONS.FETCH_PRODUCTS,
-    }),
     ...mapMutations({
-      showEditModal: MUTATIONS.SHOW_EDIT_MODAL,
+      mutateIsLoading: COMMON_MUTATIONS.MUTATE_IS_LOADING,
+      mutateIsShowProductCreation: COMMON_MUTATIONS.MUTATE_IS_SHOW_PRODUCT_CREATION,
     }),
 
-    addProductClick() {
-      this.showEditModal(true)
+    addProductButtonClick() {
+      this.mutateIsShowProductCreation(true)
     },
   },
-  computed: {
-    ...mapState(['products']),
-  },
   mounted() {
-    if (!this.products || this.products.length === 0) {
-      this.fetchProducts()
-    }
+    this.mutateIsLoading(false)
   },
 })
 </script>
-
-<style scoped>
-.zoom {
-  transition: transform 0.2s;
-}
-
-.zoom:hover {
-  transform: scale(1.2);
-}
-</style>

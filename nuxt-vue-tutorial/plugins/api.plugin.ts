@@ -1,32 +1,28 @@
-import { AuthService, BillService, ProductService, UserService } from '~/services'
+import { AppService, AuthService, BillService, ProductService, UserService } from '@services'
 import { Plugin } from '@nuxt/types'
-
-export interface Services {
-  product: ProductService
-  auth: AuthService
-  bill: BillService
-  user: UserService
-}
+import { getAccessToken } from '@utils'
 
 const apiPlugin: Plugin = ({ $axios }, inject) => {
   const axios = $axios.create()
 
   axios.interceptors.request.use((req) => {
-    const token = localStorage.getItem('accessToken')
-    if (token) {
-      req.headers = {
-        ...req.headers,
-        Authorization: `Bearer ${token}`,
+    if (process.client) {
+      const token = getAccessToken()
+      if (token) {
+        req.headers = {
+          ...req.headers,
+          Authorization: `Bearer ${token}`,
+        }
       }
     }
     return req
   })
 
-  const services: Services = {
-    product: new ProductService(axios),
+  const services: AppService = {
     auth: new AuthService(axios),
     bill: new BillService(axios),
     user: new UserService(axios),
+    product: new ProductService(axios),
   }
 
   inject('api', services)

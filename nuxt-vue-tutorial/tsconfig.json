@@ -12,11 +12,40 @@
     "experimentalDecorators": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./*"],
-      "@/*": ["./*"]
+      "@": ["./"],
+      "@/*": ["./*"],
+
+      "@utils": ["./utils"],
+      "@utils/*": ["./utils/*"],
+
+      "@store": ["./store"],
+      "@store/*": ["./store/*"],
+
+      "@pages": ["./pages"],
+      "@pages/*": ["./pages/*"],
+
+      "@assets": ["./assets"],
+      "@assets/*": ["./assets/*"],
+
+      "@models": ["./models"],
+      "@models/*": ["./models/*"],
+
+      "@layouts": ["./layouts"],
+      "@layouts/*": ["./layouts/*"],
+
+      "@plugins": ["./plugins"],
+      "@plugins/*": ["./plugins/*"],
+
+      "@services": ["./services"],
+      "@services/*": ["./services/*"],
+
+      "@middleware": ["./middleware"],
+      "@middleware/*": ["./middleware/*"],
+
+      "@components": ["./components"],
+      "@components/*": ["./components/*"]
     },
-    "types": ["@nuxt/types", "@nuxtjs/axios", "@types/node"],
-    "suppressExcessPropertyErrors": false
+    "types": ["@nuxt/types", "@nuxtjs/axios", "@types/node", "@nuxtjs/vuetify"]
   },
   "exclude": ["node_modules", ".nuxt", "dist"]
 }

@@ -1,4 +1,4 @@
-const prettierrc = require('./.prettierrc')
+const prettierrc = require('./prettierrc')
 
 module.exports = {
   root: true,
@@ -6,7 +6,11 @@ module.exports = {
     browser: true,
     node: true,
   },
-  extends: ['@nuxtjs/eslint-config-typescript', 'plugin:nuxt/recommended', 'prettier'],
+  extends: [
+    '@nuxtjs/eslint-config-typescript',
+    'plugin:nuxt/recommended',
+    'prettier',
+  ],
   plugins: [],
   rules: {
     'prettier/prettier': [...prettierrc, 'error'],

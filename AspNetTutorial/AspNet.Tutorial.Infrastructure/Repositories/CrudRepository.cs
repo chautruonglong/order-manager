@@ -73,17 +73,31 @@ namespace AspNet.Tutorial.Infrastructure.Repositories
 
         public virtual async Task<TEntity> Insert(TEntity entity)
         {
-            entity = (await _dbSet.AddAsync(entity)).Entity;
-
-            await _context.SaveChangesAsync();
-
-            return entity;
+            try
+            {
+                await _dbSet.AddAsync(entity);
+                await _context.SaveChangesAsync();
+                return entity;
+            }
+            catch(Exception exception)
+            {
+                _dbSet.Remove(entity);
+                throw new DbUpdateException(exception.Message);
+            }
         }
 
         public virtual async Task InsertMany(IEnumerable<TEntity> entities)
         {
-            await _dbSet.AddRangeAsync(entities);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _dbSet.AddRangeAsync(entities);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception exception)
+            {
+                _dbSet.RemoveRange(entities);
+                throw new DbUpdateException(exception.Message);
+            }
         }
 
         public virtual async Task<TEntity> Update(TEntity entity)

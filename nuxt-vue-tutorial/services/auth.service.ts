@@ -1,19 +1,18 @@
-import { AccessToken, Login, UserRegister } from '@/models/auth.models'
-import { User } from '@/models/user.models'
+import { Login, AccessToken, UserRegister, User } from '@models'
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 
-export default class AuthService {
-  constructor(private readonly $axios: NuxtAxiosInstance) {}
+export class AuthService {
+  constructor(private readonly axios: NuxtAxiosInstance) {}
 
   public async login(payload: Login): Promise<AccessToken> {
-    return await this.$axios.$post('auth/login', payload)
+    return await this.axios.$post('/api/auth/login', payload)
   }
 
   public async refresh(): Promise<AccessToken> {
-    return await this.$axios.$post('auth/refresh')
+    return await this.axios.$get('/api/auth/refresh')
   }
 
   public async register(payload: UserRegister): Promise<User> {
-    return await this.$axios.$post('auth/register', payload)
+    return await this.axios.$post('/api/auth/register', payload)
   }
 }

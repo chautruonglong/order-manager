@@ -1,4 +1,4 @@
-import { OrderCreation, OrderProduct } from './order.models'
+import { OrderCreation, OrderProduct } from '@models'
 
 export interface BillCreation {
   total: number

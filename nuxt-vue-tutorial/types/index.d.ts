@@ -1,7 +1,7 @@
-import { Services } from '~/plugins/api.plugin'
+import { AppService } from '@services'
 
 declare module 'vuex/types/index' {
   interface Store<S> {
-    $api: Services
+    $api: AppService
   }
 }

@@ -1,19 +1,18 @@
-import { UserModification } from './../models/user.models'
+import { User, UserModification } from '@models'
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
-import { User } from '~/models/user.models'
 
-export default class UserServices {
-  constructor(private readonly $axios: NuxtAxiosInstance) {}
+export class UserService {
+  constructor(private readonly axios: NuxtAxiosInstance) {}
 
   public async getUser(id: string): Promise<User> {
-    return await this.$axios.$get(`users/${id}`)
-  }
-
-  public async updateUser(id: string, user: UserModification): Promise<User> {
-    return await this.$axios.$put(`users/${id}`, user)
+    return await this.axios.$get(`/api/users/${id}`)
   }
 
   public async deleteUser(id: string): Promise<any> {
-    return await this.$axios.$delete(`users/${id}`)
+    return await this.axios.$delete(`/api/users/${id}`)
+  }
+
+  public async updateUser({ id, user }: { id: string; user: UserModification }): Promise<User> {
+    return await this.axios.$put(`/api/users/${id}`, user)
   }
 }

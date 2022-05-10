@@ -1,5 +1,5 @@
+import { Product } from '@models'
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
-import { Product } from '@/models/product.models'
 
 export interface ProductQueries {
   page: number
@@ -8,36 +8,36 @@ export interface ProductQueries {
   sort?: string
 }
 
-export default class ProductService {
-  constructor(private readonly $axios: NuxtAxiosInstance) {}
+export class ProductService {
+  constructor(private readonly axios: NuxtAxiosInstance) {}
 
   public async fetchMany({ page, size, question, sort }: ProductQueries): Promise<Product[]> {
     let queries =
-      `${Number.isInteger(page) ? `page=${page}&` : ''}` +
-      `${Number.isInteger(size) ? `size=${size}&` : ''}` +
-      `${question ? `question=${question}&` : ''}` +
-      `${sort ? `sort=${sort}` : ''}`
+      `${page ? `page=${page}&` : ''}` +
+      `${size ? `size=${size}&` : ''}` +
+      `${sort ? `sort=${sort}&` : ''}` +
+      `${question ? `question=${question}` : ''}`
 
     if (queries.endsWith('&')) {
       queries = queries.slice(0, queries.length - 1)
     }
 
-    return await this.$axios.$get(`products?${queries}`)
+    return await this.axios.$get(`/api/products?${queries}`)
   }
 
   public async fetchOne(id: string): Promise<Product> {
-    return await this.$axios.$get(`products/${id}`)
-  }
-
-  public async create(payload: FormData): Promise<Product> {
-    return await this.$axios.$post('products', payload)
-  }
-
-  public async update({ id, payload }: { id: string; payload: FormData }): Promise<Product> {
-    return await this.$axios.$put(`products/${id}`, payload)
+    return await this.axios.$get(`/api/products/${id}`)
   }
 
   public async delete(id: string): Promise<Product> {
-    return await this.$axios.$delete(`products/${id}`)
+    return await this.axios.$delete(`/api/products/${id}`)
+  }
+
+  public async create(product: FormData): Promise<Product> {
+    return await this.axios.$post('/api/products', product)
+  }
+
+  public async update({ id, product }: { id: string; product: FormData }): Promise<Product> {
+    return await this.axios.$put(`/api/products/${id}`, product)
   }
 }
