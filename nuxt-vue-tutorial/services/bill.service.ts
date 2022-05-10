@@ -10,7 +10,7 @@ export interface BillQueries {
 export class BillService {
   constructor(private readonly axios: NuxtAxiosInstance) {}
 
-  public async fetchMany({ page, size, sort }: BillQueries): Promise<BillOrder> {
+  public async fetchMany({ page, size, sort }: BillQueries): Promise<BillOrder[]> {
     let queries =
       `${Number.isInteger(page) ? `page=${page}&` : ''}` +
       `${Number.isInteger(size) ? `size=${size}&` : ''}` +

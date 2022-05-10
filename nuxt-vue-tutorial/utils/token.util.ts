@@ -21,3 +21,14 @@ export const isValidToken = (token: string): boolean => {
   const exp = jwt.exp * 1000
   return exp > Date.now()
 }
+
+export const getUserIdFromToken = (token?: string | null): string | undefined => {
+  if (!token) {
+    token = getAccessToken()
+  }
+
+  if (token) {
+    const jwt = jwtDecode<any>(token)
+    return jwt.id
+  }
+}

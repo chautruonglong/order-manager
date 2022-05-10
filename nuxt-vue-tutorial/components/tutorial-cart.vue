@@ -46,7 +46,7 @@
                   </div>
                   <div class="tw-mt-6">
                     <a
-                      href="#"
+                      @click="orderButtonClick"
                       class="tw-flex tw-items-center tw-justify-center tw-rounded-md tw-border tw-border-transparent tw-bg-indigo-600 tw-px-6 tw-py-3 tw-text-base tw-font-medium tw-text-white tw-shadow-sm hover:tw-bg-indigo-700"
                       >Order</a
                     >
@@ -57,6 +57,8 @@
           </div>
         </div>
       </div>
+
+      <tutorial-confirm ref="confirmDialog" />
     </div>
   </transition>
 </template>
@@ -65,7 +67,7 @@
 import Vue from 'vue'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import { COMMON_GETTERS, COMMON_MUTATIONS } from '@store/common'
-import { BILL_GETTERS, BILL_ACTIONS } from '@store/bill'
+import { BILL_GETTERS, BILL_ACTIONS, BILL_MUTATIONS } from '@store/bill'
 
 export default Vue.extend({
   data() {
@@ -82,14 +84,33 @@ export default Vue.extend({
   methods: {
     ...mapMutations({
       mutateIsShowCart: COMMON_MUTATIONS.MUTATE_IS_SHOW_CART,
+      mutateSnackbar: COMMON_MUTATIONS.MUTATE_SNACKBAR,
+      mutateIsLoading: COMMON_MUTATIONS.MUTATE_IS_LOADING,
+      mutateLocalBill: BILL_MUTATIONS.MUTATE_LOCAL_BILL,
     }),
 
     ...mapActions({
       removeProductFromCart: BILL_ACTIONS.REMOVE_PRODUCT_FROM_CART,
+      createBill: BILL_ACTIONS.CREATE_BILL,
     }),
 
     closeButtonClick() {
       this.mutateIsShowCart(false)
+    },
+
+    async orderButtonClick() {
+      if (await (this.$refs.confirmDialog as any).active()) {
+        try {
+          this.mutateIsLoading(true)
+          await this.createBill(this.localBill)
+          this.mutateSnackbar('Order successfully')
+          this.mutateLocalBill(null)
+        } catch (e: any) {
+          this.mutateSnackbar(e.message)
+        } finally {
+          this.mutateIsLoading(false)
+        }
+      }
     },
   },
 })

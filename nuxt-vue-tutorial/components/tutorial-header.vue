@@ -53,13 +53,18 @@
           </button>
 
           <div @click="isUserMenu = true" class="tw-ml-3 tw-relative tw-cursor-pointer">
-            <v-avatar color="primary" size="36" class="hover:tw-scale-110">LC</v-avatar>
+            <v-avatar color="primary" size="36" class="hover:tw-scale-110">{{ sortName }}</v-avatar>
 
             <transition>
               <div
                 v-show="isUserMenu"
-                class="tw-origin-top-right tw-absolute tw-right-0 tw-mt-2 tw-w-48 tw-rounded-md tw-shadow-lg tw-py-1 tw-bg-white tw-ring-1 tw-ring-black tw-ring-opacity-5 focus:tw-outline-none"
+                class="tw-origin-top-right tw-absolute tw-right-0 tw-mt-2 px-2 tw-rounded-md tw-shadow-lg tw-py-1 tw-bg-white tw-ring-1 tw-ring-black tw-ring-opacity-5 focus:tw-outline-none"
               >
+                <div class="tw-block tw-px-4 tw-py-2 tw-text-sm tw-text-purple-600">Hello, {{ user ? user.name : 'There' }}!</div>
+                <div class="tw-block tw-px-4 tw-py-2 tw-text-sm tw-text-purple-600">
+                  {{ user ? user.email : 'you@gmail.com' }}
+                </div>
+                <v-divider></v-divider>
                 <template v-for="(item, index) in userMenu">
                   <a
                     :key="index"
@@ -117,6 +122,7 @@ import { PRODUCT_MUTATIONS, PRODUCT_ACTIONS } from '@store/product'
 import { AUTH_GETTERS, AUTH_ACTIONS } from '@store/auth'
 import { COMMON_MUTATIONS } from '@store/common'
 import { BILL_GETTERS } from '@store/bill'
+import { USER_GETTERS } from '@store/user'
 
 interface Navigation {
   name: string
@@ -133,7 +139,7 @@ const navigation: Navigation[] = [
 
 const lexLogo = '/lex-logo.svg'
 
-const userMenu = ['Profile', 'History', 'Logout']
+const userMenu = ['History', 'Logout']
 
 export default Vue.extend({
   data() {
@@ -148,7 +154,14 @@ export default Vue.extend({
     ...mapGetters({
       isAuthenticated: AUTH_GETTERS.GET_IS_AUTHENTICATED,
       localBill: BILL_GETTERS.GET_LOCAL_BILL,
+      user: USER_GETTERS.GET_USER,
     }),
+
+    sortName() {
+      let name = ''
+      this.user?.name.split(' ').forEach((n: string) => (name += n[0]))
+      return name && name.length <= 3 ? name : 'YOU'
+    },
   },
   methods: {
     ...mapMutations({
@@ -172,10 +185,14 @@ export default Vue.extend({
       this.mutateProducts([])
       this.mutateQuestion(current.value)
 
+      current.active = true
+
+      if (this.$route.path !== '/') {
+        this.$router.push('/')
+      }
+
       await this.fetchProducts()
       this.mutateIsLoading(false)
-
-      current.active = true
     },
 
     async lexLogoClick() {
@@ -187,6 +204,10 @@ export default Vue.extend({
         this.mutateProducts([])
         this.mutateQuestion('')
 
+        if (this.$route.path !== '/') {
+          this.$router.push('/')
+        }
+
         await this.fetchProducts()
         this.mutateIsLoading(false)
       }
@@ -194,7 +215,11 @@ export default Vue.extend({
 
     async menuItemClick(item: string) {
       switch (item) {
-        case userMenu[2]:
+        case userMenu[0]:
+          this.$router.push('/history')
+          this.isUserMenu = false
+          break
+        case userMenu[1]:
           if (await (this.$refs.confirmDialog as any).active()) {
             this.logout()
             location.reload()

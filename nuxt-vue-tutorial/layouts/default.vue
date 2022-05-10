@@ -25,8 +25,9 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 import { COMMON_GETTERS, COMMON_MUTATIONS } from '@store/common'
+import { USER_ACTIONS } from '@store/user'
 
 export default Vue.extend({
   data() {
@@ -52,16 +53,31 @@ export default Vue.extend({
   methods: {
     ...mapMutations({
       mutateSnackbar: COMMON_MUTATIONS.MUTATE_SNACKBAR,
+      mutateIsLoading: COMMON_MUTATIONS.MUTATE_IS_LOADING,
+    }),
+
+    ...mapActions({
+      fetchUser: USER_ACTIONS.FETCH_USER,
     }),
   },
-  created() {
-    this.$store.subscribe((mutation, state) => {
-      if (mutation.type === COMMON_MUTATIONS.MUTATE_SNACKBAR) {
-        this.activeSnackbar = state.common.snackbar.active
-        this.timeoutSnackbar = state.common.snackbar.timeout
-        this.messageSnackbar = state.common.snackbar.message
-      }
-    })
+  async created() {
+    try {
+      this.mutateIsLoading(true)
+
+      this.$store.subscribe((mutation, state) => {
+        if (mutation.type === COMMON_MUTATIONS.MUTATE_SNACKBAR) {
+          this.activeSnackbar = state.common.snackbar.active
+          this.timeoutSnackbar = state.common.snackbar.timeout
+          this.messageSnackbar = state.common.snackbar.message
+        }
+      })
+
+      await this.fetchUser()
+    } catch (e: any) {
+      this.mutateSnackbar(e.message)
+    } finally {
+      this.mutateIsLoading(false)
+    }
   },
 })
 </script>

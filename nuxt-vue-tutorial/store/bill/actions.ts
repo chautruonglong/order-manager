@@ -1,18 +1,23 @@
 import { ActionTree } from 'vuex/types'
 import { BillState, BILL_NAMESPACED, BILL_MUTATIONS } from '@store/bill'
-import { BillCreation, Product } from '@models'
+import { BillCreation, BillOrder, Product } from '@models'
 import { cloneDeep } from 'lodash'
+import { BillQueries } from '@services'
 
 export interface BillAction {
   ADD_PRODUCT_TO_CART: string
   SUB_PRODUCT_FROM_CART: string
   REMOVE_PRODUCTS_FROM_CART: string
+  CREATE_BILL: string
+  FETCH_BILLS: string
 }
 
 export const BILL_ACTIONS: { [k: string]: string } & BillAction = {
   ADD_PRODUCT_TO_CART: 'ADD_PRODUCT_TO_CART',
   SUB_PRODUCT_FROM_CART: 'SUB_PRODUCT_FROM_CART',
   REMOVE_PRODUCTS_FROM_CART: 'REMOVE_PRODUCTS_FROM_CART',
+  CREATE_BILL: 'CREATE_BILL',
+  FETCH_BILLS: 'FETCH_BILLS',
 }
 
 const billActions: ActionTree<BillState, BillState> = {
@@ -59,6 +64,18 @@ const billActions: ActionTree<BillState, BillState> = {
 
     commit(BILL_MUTATIONS.MUTATE_LOCAL_BILL, localBill, { root: true })
     return localBill
+  },
+
+  async [BILL_ACTIONS.CREATE_BILL]({ commit }, bill: BillCreation): Promise<string> {
+    return await this.$api.bill.create(bill)
+  },
+
+  async [BILL_ACTIONS.FETCH_BILLS]({ commit, state }, queries: BillQueries = { ...state }): Promise<BillOrder[]> {
+    const bills = await this.$api.bill.fetchMany(queries)
+    if (bills && bills.length > 0) {
+      commit(BILL_MUTATIONS.MUTATE_HISTORY_BILLS, [...state.historyBills, ...bills], { root: true })
+    }
+    return bills
   },
 }
 

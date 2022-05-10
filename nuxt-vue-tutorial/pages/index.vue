@@ -15,28 +15,44 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 import { COMMON_MUTATIONS } from '@store/common'
 import { AUTH_GETTERS } from '@store/auth'
+import { PRODUCT_GETTERS, PRODUCT_ACTIONS } from '@store/product'
 
 export default Vue.extend({
   computed: {
     ...mapGetters({
       isAuthenticated: AUTH_GETTERS.GET_IS_AUTHENTICATED,
+      products: PRODUCT_GETTERS.GET_PRODUCTS,
     }),
   },
   methods: {
     ...mapMutations({
       mutateIsLoading: COMMON_MUTATIONS.MUTATE_IS_LOADING,
       mutateIsShowProductCreation: COMMON_MUTATIONS.MUTATE_IS_SHOW_PRODUCT_CREATION,
+      mutateSnackbar: COMMON_MUTATIONS.MUTATE_SNACKBAR,
+    }),
+
+    ...mapActions({
+      fetchProducts: PRODUCT_ACTIONS.FETCH_PRODUCTS,
     }),
 
     addProductButtonClick() {
       this.mutateIsShowProductCreation(true)
     },
   },
-  mounted() {
-    this.mutateIsLoading(false)
+  async created() {
+    try {
+      this.mutateIsLoading(true)
+      if (!this.products || this.products.length <= 0) {
+        await this.fetchProducts()
+      }
+    } catch (e: any) {
+      this.mutateSnackbar(e.message)
+    } finally {
+      this.mutateIsLoading(false)
+    }
   },
 })
 </script>

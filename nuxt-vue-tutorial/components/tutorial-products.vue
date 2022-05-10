@@ -94,11 +94,5 @@ export default Vue.extend({
       this.reorderProducts()
     },
   },
-  async created() {
-    if (!this.products || this.products.length <= 0) {
-      await this.fetchProducts()
-    }
-    this.mutateIsLoading(false)
-  },
 })
 </script>
