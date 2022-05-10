@@ -1,5 +1,5 @@
 <template>
-  <nav class="bg-gray-800">
+  <nav class="bg-gray-800 w-full">
     <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
       <div class="relative flex items-center justify-between h-16">
         <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -43,10 +43,10 @@
           class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
         >
           <button
-            @click="bellButtonClick"
+            @click="cartButtonClick"
             class="flex items-center bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
           >
-            <ion-icon name="notifications-sharp" size="small"></ion-icon>
+            <ion-icon name="cart" class="h-6 w-6"></ion-icon>
           </button>
 
           <div @click="isUserMenu = true" class="ml-3 relative cursor-pointer">
@@ -68,9 +68,12 @@
         </div>
 
         <div v-else>
-          <nuxt-link to="/login" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-lg font-medium"
-            >Login</nuxt-link
+          <nuxt-link
+            to="/login"
+            class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-lg font-medium"
           >
+            Login
+          </nuxt-link>
         </div>
       </div>
     </div>
@@ -109,7 +112,7 @@ interface Navigation {
 }
 
 const navigation: Navigation[] = [
-  { name: 'Clothes', value: 'quần áo', active: false },
+  { name: 'Clothes', value: 'áo', active: false },
   { name: 'Books', value: 'sách', active: false },
   { name: 'Phones', value: 'điện thoại', active: false },
   { name: 'laptops', value: 'máy tính', active: false },
@@ -137,6 +140,7 @@ export default Vue.extend({
     ...mapMutations({
       mutateQuestion: PRODUCT_MUTATIONS.MUTATE_QUESTION,
       mutateProducts: PRODUCT_MUTATIONS.MUTATE_PRODUCTS,
+      mutatePage: PRODUCT_MUTATIONS.MUTATE_PAGE,
       mutateIsLoading: COMMON_MUTATIONS.MUTATE_IS_LOADING,
       mutateIsShowCart: COMMON_MUTATIONS.MUTATE_IS_SHOW_CART,
     }),
@@ -149,37 +153,46 @@ export default Vue.extend({
     async navigationItemClick(current: Navigation) {
       this.mutateIsLoading(true)
       this.navigation.forEach((item) => (item.active = false))
-      this.mutateQuestion(current.value)
+
+      this.mutatePage(0)
       this.mutateProducts([])
+      this.mutateQuestion(current.value)
+
       await this.fetchProducts()
       this.mutateIsLoading(false)
+
       current.active = true
     },
 
     async lexLogoClick() {
       this.mutateIsLoading(true)
-      this.mutateQuestion('')
+      this.navigation.forEach((item) => (item.active = false))
+
+      this.mutatePage(0)
       this.mutateProducts([])
+      this.mutateQuestion('')
+
       await this.fetchProducts()
       this.mutateIsLoading(false)
-    },
-
-    hideUserMenu(e: any) {
-      if (!this.$el.contains(e.target)) {
-        this.isUserMenu = false
-      }
     },
 
     menuItemClick(item: string) {
       switch (item) {
         case userMenu[2]:
           this.logout()
+          location.reload()
           break
       }
     },
 
-    bellButtonClick() {
+    cartButtonClick() {
       this.mutateIsShowCart(true)
+    },
+
+    hideUserMenu(e: any) {
+      if (!this.$el.contains(e.target)) {
+        this.isUserMenu = false
+      }
     },
   },
   mounted() {

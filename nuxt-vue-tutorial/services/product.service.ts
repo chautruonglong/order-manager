@@ -13,10 +13,10 @@ export class ProductService {
 
   public async fetchMany({ page, size, question, sort }: ProductQueries): Promise<Product[]> {
     let queries =
-      `${page ? `page=${page}&` : ''}` +
-      `${size ? `size=${size}&` : ''}` +
       `${sort ? `sort=${sort}&` : ''}` +
-      `${question ? `question=${question}` : ''}`
+      `${question ? `question=${question}&` : ''}` +
+      `${Number.isInteger(page) ? `page=${page}&` : ''}` +
+      `${Number.isInteger(size) ? `size=${size}` : ''}`
 
     if (queries.endsWith('&')) {
       queries = queries.slice(0, queries.length - 1)

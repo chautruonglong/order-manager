@@ -10,7 +10,6 @@ export interface ProductMutation {
   MUTATE_SORT: string
   MUTATE_QUESTION: string
   MUTATE_PRODUCT_MODAL: string
-  MUTATE_ORDER_PRODUCTS: string
 }
 
 export const PRODUCT_MUTATIONS: { [key: string]: string } & ProductMutation = {
@@ -21,7 +20,6 @@ export const PRODUCT_MUTATIONS: { [key: string]: string } & ProductMutation = {
   MUTATE_SORT: 'MUTATE_SORT',
   MUTATE_QUESTION: 'MUTATE_QUESTION',
   MUTATE_PRODUCT_MODAL: 'MUTATE_PRODUCT_MODAL',
-  MUTATE_ORDER_PRODUCTS: 'MUTATE_ORDER_PRODUCTS',
 }
 
 const productMutations: MutationTree<ProductState> = {
@@ -54,10 +52,6 @@ const productMutations: MutationTree<ProductState> = {
 
   [PRODUCT_MUTATIONS.MUTATE_PRODUCT_MODAL](state, product: Product): void {
     state.productModal = product
-  },
-
-  [PRODUCT_MUTATIONS.MUTATE_ORDER_PRODUCTS](state, products: Product[]): void {
-    state.orderProducts = products
   },
 }
 

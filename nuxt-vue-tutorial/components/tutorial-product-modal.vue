@@ -14,16 +14,16 @@
         class="flex text-base text-left transform transition w-full md:inline-block md:max-w-2xl md:px-4 md:my-8 md:align-middle lg:max-w-4xl"
       >
         <div
-          class="w-full relative flex items-center bg-white px-4 pt-14 pb-8 overflow-hidden shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8"
+          class="w-full relative flex flex-col items-center bg-white p-10 overflow-hidden shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8"
         >
+          <button @click="closeButtonClick" class="flex justify-end w-full mb-5text-gray-400 hover:text-gray-500">
+            <ion-icon name="close" size="large"></ion-icon>
+          </button>
           <div class="w-full grid grid-cols-1 gap-y-8 gap-x-6 items-start sm:grid-cols-12 lg:gap-x-8">
             <div class="aspect-w-2 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden sm:col-span-4 lg:col-span-5">
               <img :src="productModal.image" alt="" class="object-center object-cover" />
             </div>
             <div class="sm:col-span-8 lg:col-span-7 flex flex-col justify-between h-full">
-              <button @click="closeButtonClick" class="flex justify-end text-gray-400 hover:text-gray-500">
-                <ion-icon name="close" size="large"></ion-icon>
-              </button>
               <h2 class="text-2xl font-extrabold text-gray-900">{{ productModal.name }}</h2>
               <div class="my-7">
                 <p class="text-2xl text-gray-900">
@@ -71,7 +71,8 @@
 import Vue from 'vue'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import { COMMON_GETTERS, COMMON_MUTATIONS } from '@store/common'
-import { PRODUCT_GETTERS, PRODUCT_MUTATIONS, PRODUCT_ACTIONS } from '@store/product'
+import { PRODUCT_GETTERS, PRODUCT_ACTIONS } from '@store/product'
+import { BILL_ACTIONS } from '@store/bill'
 
 export default Vue.extend({
   computed: {
@@ -87,15 +88,14 @@ export default Vue.extend({
       mutateIsShowProductModification: COMMON_MUTATIONS.MUTATE_IS_SHOW_PRODUCT_MODIFICATION,
       mutateIsLoading: COMMON_MUTATIONS.MUTATE_IS_LOADING,
       mutateSnackbar: COMMON_MUTATIONS.MUTATE_SNACKBAR,
-      mutateOrdersProducts: PRODUCT_MUTATIONS.MUTATE_ORDER_PRODUCTS,
     }),
 
     ...mapActions({
       deleteProduct: PRODUCT_ACTIONS.DELETE_PRODUCT,
+      addProductToCart: BILL_ACTIONS.ADD_PRODUCT_TO_CART,
     }),
 
     closeButtonClick() {
-      console.log(this.productModal)
       this.mutateIsShowProductModal(false)
     },
 
@@ -116,10 +116,15 @@ export default Vue.extend({
       this.mutateIsShowProductModification(true)
     },
 
-    orderButtonClick() {
-      this.mutateOrdersProducts([...this.orderProducts, this.productModal])
-      this.mutateIsShowProductModal(false)
-      this.mutateSnackbar('Add a product to cart')
+    async orderButtonClick() {
+      try {
+        await this.addProductToCart(this.productModal)
+        this.mutateSnackbar('Add a product to cart')
+      } catch (e: any) {
+        this.mutateSnackbar(e.message)
+      } finally {
+        this.mutateIsShowProductModal(false)
+      }
     },
   },
 })

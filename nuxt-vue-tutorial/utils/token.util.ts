@@ -18,6 +18,6 @@ export const clearTokens = (): void => {
 
 export const isValidToken = (token: string): boolean => {
   const jwt = jwtDecode<any>(token)
-  console.log(jwt)
-  return true
+  const exp = jwt.exp * 1000
+  return exp > Date.now()
 }

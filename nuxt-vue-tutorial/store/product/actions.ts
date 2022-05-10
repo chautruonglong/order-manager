@@ -53,7 +53,7 @@ const productActions: ActionTree<ProductState, ProductState> = {
     return $product
   },
 
-  [PRODUCT_ACTIONS.REORDER_PRODUCTS]({ commit, state }): Product[] {
+  async [PRODUCT_ACTIONS.REORDER_PRODUCTS]({ commit, state }): Promise<Product[]> {
     const tokens = state.sort.split('_')
     let cmp
 

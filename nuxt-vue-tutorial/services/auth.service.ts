@@ -1,3 +1,4 @@
+import { getRefreshToken } from '@utils'
 import { Login, AccessToken, UserRegister, User } from '@models'
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 
@@ -9,6 +10,8 @@ export class AuthService {
   }
 
   public async refresh(): Promise<AccessToken> {
+    const token = getRefreshToken()
+    this.axios.setHeader('Authorization', `Bearer ${token}`)
     return await this.axios.$get('/api/auth/refresh')
   }
 

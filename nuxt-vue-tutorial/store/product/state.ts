@@ -9,7 +9,6 @@ export interface ProductState {
   sort: string
   question: string
   productModal: Product | null
-  orderProducts: Product[]
 }
 
 const productState: ProductState = {
@@ -19,7 +18,6 @@ const productState: ProductState = {
   sort: 'modified_at_desc',
   question: '',
   productModal: null,
-  orderProducts: [],
 }
 
 export default () => productState

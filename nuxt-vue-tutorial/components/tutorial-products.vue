@@ -90,7 +90,9 @@ export default Vue.extend({
     },
   },
   async created() {
-    await this.fetchProducts()
+    if (!this.products || this.products.length <= 0) {
+      await this.fetchProducts()
+    }
     this.mutateIsLoading(false)
   },
 })

@@ -26,9 +26,9 @@ const AuthActions: ActionTree<AuthState, AuthState> = {
     return accessTokens
   },
 
-  [AUTH_ACTIONS.LOGOUT]({ commit }): void {
+  async [AUTH_ACTIONS.LOGOUT]({ commit }): Promise<void> {
     clearTokens()
-    commit(AUTH_MUTATIONS.MUTATE_IS_AUTHENTICATED, false)
+    commit(AUTH_MUTATIONS.MUTATE_IS_AUTHENTICATED, false, { root: true })
   },
 
   async [AUTH_ACTIONS.REGISTER](_, user: UserRegister): Promise<User> {

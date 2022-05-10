@@ -12,7 +12,7 @@ export interface Order {
 
 export interface OrderCreation {
   quantity: number
-  productId: string
+  product: Product
 }
 
 export interface OrderProduct {

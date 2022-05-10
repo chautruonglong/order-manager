@@ -61,6 +61,10 @@ const config: NuxtConfig = {
     treeShake: true,
     customVariables: ['@assets/variables.scss'],
   },
+
+  router: {
+    middleware: ['auth.middleware'],
+  },
 }
 
 export default config

@@ -10,7 +10,6 @@ export interface ProductGetter {
   GET_SORT: string
   GET_QUESTION: string
   GET_PRODUCT_MODAL: string
-  GET_ORDER_PRODUCTS: string
 }
 
 export const PRODUCT_GETTERS: { [k: string]: string } & ProductGetter = {
@@ -21,7 +20,6 @@ export const PRODUCT_GETTERS: { [k: string]: string } & ProductGetter = {
   GET_SORT: 'GET_SORT',
   GET_QUESTION: 'GET_QUESTION',
   GET_PRODUCT_MODAL: 'GET_PRODUCT_MODAL',
-  GET_ORDER_PRODUCTS: 'GET_ORDER_PRODUCTS',
 }
 
 const productGetters: GetterTree<ProductState, ProductState> = {
@@ -51,10 +49,6 @@ const productGetters: GetterTree<ProductState, ProductState> = {
 
   [PRODUCT_GETTERS.GET_PRODUCT_MODAL](state): Product | null {
     return state.productModal
-  },
-
-  [PRODUCT_GETTERS.GET_ORDER_PRODUCTS](state): Product[] {
-    return state.orderProducts
   },
 }
 
