@@ -1,19 +1,19 @@
 <template>
   <v-app>
-    <v-progress-linear v-show="isLoading" indeterminate color="indigo" class="z-50 absolute top-0"> </v-progress-linear>
+    <v-progress-linear v-show="isLoading" indeterminate color="indigo" class="tw-z-50 tw-absolute tw-top-0"> </v-progress-linear>
     <tutorial-header v-if="isHaveHeader === true" />
     <nuxt />
     <v-snackbar
       v-model="activeSnackbar"
       :timeout="timeoutSnackbar"
       :value="true"
-      absolute
+      tw-absolute
       centered
       right
       top
       color="deep-purple accent-4"
       elevation="24"
-      class="top-20 right-5"
+      class="tw-top-20 tw-right-5"
     >
       {{ messageSnackbar }}
       <template v-slot:action="{ attrs }">

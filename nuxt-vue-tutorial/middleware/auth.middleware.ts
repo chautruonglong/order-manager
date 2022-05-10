@@ -11,17 +11,17 @@ export default async ({ store, route, redirect }: Context) => {
 
     if (currentPath == '/login') {
       redirect('/')
-    } else {
-      try {
-        const accessTokens = await store.$api.auth.refresh()
+    }
+  } else {
+    try {
+      const accessTokens = await store.$api.auth.refresh()
 
-        setAccessToken(accessTokens.accessToken)
-        setRefreshToken(accessTokens.refreshToken)
+      setAccessToken(accessTokens.accessToken)
+      setRefreshToken(accessTokens.refreshToken)
 
-        store.commit(AUTH_MUTATIONS.MUTATE_IS_AUTHENTICATED, true, { root: true })
-      } catch {
-        store.commit(AUTH_MUTATIONS.MUTATE_IS_AUTHENTICATED, false, { root: true })
-      }
+      store.commit(AUTH_MUTATIONS.MUTATE_IS_AUTHENTICATED, true, { root: true })
+    } catch {
+      store.commit(AUTH_MUTATIONS.MUTATE_IS_AUTHENTICATED, false, { root: true })
     }
   }
 }

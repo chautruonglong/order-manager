@@ -11,8 +11,12 @@ export class AuthService {
 
   public async refresh(): Promise<AccessToken> {
     const token = getRefreshToken()
-    this.axios.setHeader('Authorization', `Bearer ${token}`)
-    return await this.axios.$get('/api/auth/refresh')
+    const $axios = this.axios.create()
+
+    if (token) {
+      $axios.setHeader('Authorization', `Bearer ${token}`)
+    }
+    return await $axios.$get('/api/auth/refresh')
   }
 
   public async register(payload: UserRegister): Promise<User> {

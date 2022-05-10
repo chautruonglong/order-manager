@@ -1,8 +1,8 @@
 <template>
-  <div class="relative inline-block text-left z-10">
+  <div class="tw-relative tw-inline-block tw-text-left tw-z-10">
     <a
       @click="isShow = !isShow"
-      class="inline-flex justify-center items-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+      class="tw-inline-flex tw-justify-center tw-items-center tw-w-full tw-rounded-md tw-border tw-border-gray-300 tw-shadow-sm tw-px-4 tw-py-2 tw-bg-white tw-text-sm tw-font-medium tw-text-gray-700 hover:tw-bg-gray-50 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-offset-gray-100 focus:tw-ring-indigo-500"
     >
       {{ currentOrder }}
       <ion-icon name="chevron-down-outline"></ion-icon>
@@ -11,13 +11,13 @@
     <transition>
       <div
         v-show="isShow"
-        class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+        class="tw-origin-top-right tw-absolute tw-right-0 tw-mt-2 tw-w-56 tw-rounded-md tw-shadow-lg tw-bg-white tw-ring-1 tw-ring-black tw-ring-opacity-5 focus:tw-outline-none"
       >
         <a
           @click="orderClick(item)"
           v-for="item in items"
           :key="item"
-          class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-300"
+          class="tw-text-gray-700 tw-block tw-px-4 tw-py-2 tw-text-sm hover:tw-bg-gray-300"
         >
           {{ item }}
         </a>

@@ -1,25 +1,32 @@
 <template>
   <transition>
-    <div v-show="isShowCart" @click. class="relative z-50" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
-      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
-      <div class="fixed inset-0 overflow-hidden">
-        <div class="absolute inset-0 overflow-hidden">
-          <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
-            <div class="pointer-events-auto w-screen max-w-md">
-              <div class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
-                <div class="flex-1 py-6 px-4 sm:px-6">
-                  <div class="flex items-start justify-between">
-                    <h2 class="text-lg font-medium text-gray-900" id="slide-over-title">Shopping cart</h2>
-                    <div class="ml-3 flex h-7 items-center">
-                      <button @click="closeButtonClick" class="-m-2 p-2 text-gray-400 hover:text-gray-500">
+    <div
+      v-show="isShowCart"
+      @click.
+      class="tw-relative tw-z-50"
+      aria-labelledby="slide-over-title"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div class="tw-fixed tw-inset-0 tw-bg-gray-500 tw-bg-opacity-75 tw-transition-opacity"></div>
+      <div class="tw-fixed tw-inset-0 tw-overflow-hidden">
+        <div class="tw-absolute tw-inset-0 tw-overflow-hidden">
+          <div class="tw-pointer-events-none tw-fixed tw-inset-y-0 tw-right-0 tw-flex tw-max-w-full tw-pl-10">
+            <div class="tw-pointer-events-auto tw-w-screen tw-max-w-md">
+              <div class="tw-flex tw-h-full tw-flex-col tw-overflow-y-scroll tw-bg-white tw-shadow-xl">
+                <div class="tw-flex-1 tw-py-6 tw-px-4 sm:tw-px-6">
+                  <div class="tw-flex tw-items-start tw-justify-between">
+                    <h2 class="tw-text-lg tw-font-medium tw-text-gray-900" id="slide-over-title">Shopping cart</h2>
+                    <div class="tw-ml-3 tw-flex tw-h-7 tw-items-center">
+                      <button @click="closeButtonClick" class="tw--m-2 tw-p-2 tw-text-gray-400 hover:tw-text-gray-500">
                         <ion-icon name="close" size="large"></ion-icon>
                       </button>
                     </div>
                   </div>
 
-                  <div class="mt-8">
-                    <div class="flow-root">
-                      <ul role="list" class="-my-6 divide-y divide-gray-200 overflow-auto">
+                  <div class="tw-mt-8">
+                    <div class="tw-flow-root">
+                      <ul role="list" class="tw--my-6 tw-divide-y tw-divide-gray-200 tw-overflow-auto">
                         <template v-if="localBill != null">
                           <li v-for="(order, index) in localBill.orders" :key="index">
                             <tutorial-cart-item :order="order" />
@@ -30,17 +37,17 @@
                   </div>
                 </div>
 
-                <div class="border-t border-gray-200 py-6 px-4 sm:px-6">
-                  <div class="flex justify-between text-base font-medium text-gray-900">
+                <div class="tw-border-t tw-border-gray-200 tw-py-6 tw-px-4 sm:tw-px-6">
+                  <div class="tw-flex tw-justify-between tw-text-base tw-font-medium tw-text-gray-900">
                     <p>Total</p>
                     <p v-if="localBill != null">
                       {{ localBill.total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) }}
                     </p>
                   </div>
-                  <div class="mt-6">
+                  <div class="tw-mt-6">
                     <a
                       href="#"
-                      class="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                      class="tw-flex tw-items-center tw-justify-center tw-rounded-md tw-border tw-border-transparent tw-bg-indigo-600 tw-px-6 tw-py-3 tw-text-base tw-font-medium tw-text-white tw-shadow-sm hover:tw-bg-indigo-700"
                       >Order</a
                     >
                   </div>

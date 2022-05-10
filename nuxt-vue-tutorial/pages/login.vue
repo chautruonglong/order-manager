@@ -1,32 +1,38 @@
 <template>
-  <div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8">
+  <div class="tw-min-h-full tw-flex tw-items-center tw-justify-center tw-py-12 tw-px-4 sm:tw-px-6 lg:tw-px-8">
+    <div class="tw-max-w-md tw-w-full tw-space-y-8">
       <div>
-        <img :src="lexLogo" class="mx-auto h-12 w-auto" alt="" />
-        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        <img :src="lexLogo" class="tw-mx-auto tw-h-12 tw-w-auto" alt="" />
+        <h2 class="tw-mt-6 tw-text-center tw-text-3xl tw-font-extrabold tw-text-gray-900">
           Sign {{ isLoginForm ? 'in' : 'up' }} to your account
         </h2>
-        <p class="mt-2 text-center text-sm text-gray-600">
+        <p class="tw-mt-2 tw-text-center tw-text-sm tw-text-gray-600">
           Or
-          <a @click="isLoginForm = false" v-if="isLoginForm === true" class="font-medium text-indigo-600 hover:text-indigo-500"
+          <a
+            @click="isLoginForm = false"
+            v-if="isLoginForm === true"
+            class="tw-font-medium tw-text-indigo-600 hover:tw-text-indigo-500"
             >Sign up
           </a>
-          <a @click="isLoginForm = true" v-if="isLoginForm === false" class="font-medium text-indigo-600 hover:text-indigo-500"
+          <a
+            @click="isLoginForm = true"
+            v-if="isLoginForm === false"
+            class="tw-font-medium tw-text-indigo-600 hover:tw-text-indigo-500"
             >Sign in
           </a>
         </p>
       </div>
 
-      <div class="mt-8 space-y-6">
+      <div class="tw-mt-8 tw-space-y-6">
         <template v-if="isLoginForm === true">
-          <div class="rounded-md shadow-sm -space-y-px">
+          <div class="tw-rounded-md tw-shadow-sm tw--space-y-px">
             <div>
               <input
                 v-model="loginPayload.email"
                 type="email"
                 autocomplete="email"
                 required
-                class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                class="tw-appearance-none tw-rounded-none tw-relative tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-placeholder-gray-500 tw-text-gray-900 tw-rounded-t-md focus:tw-outline-none focus:tw-ring-indigo-500 focus:tw-border-indigo-500 focus:tw-z-10 sm:tw-text-sm"
                 placeholder="Email address"
               />
             </div>
@@ -36,33 +42,36 @@
                 v-model="loginPayload.password"
                 type="password"
                 required
-                class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                class="tw-appearance-none tw-rounded-none tw-relative tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-placeholder-gray-500 tw-text-gray-900 tw-rounded-b-md focus:tw-outline-none focus:tw-ring-indigo-500 focus:tw-border-indigo-500 focus:tw-z-10 sm:tw-text-sm"
                 placeholder="Password"
               />
             </div>
           </div>
 
-          <div class="flex items-center justify-between">
-            <div class="flex items-center">
-              <input type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
-              <label class="ml-2 block text-sm text-gray-900">Remember me</label>
+          <div class="tw-flex tw-items-center tw-justify-between">
+            <div class="tw-flex tw-items-center">
+              <input
+                type="checkbox"
+                class="tw-h-4 tw-w-4 tw-text-indigo-600 focus:tw-ring-indigo-500 tw-border-gray-300 tw-rounded"
+              />
+              <label class="tw-ml-2 tw-block tw-text-sm tw-text-gray-900">Remember me</label>
             </div>
 
-            <div class="text-sm">
-              <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Forgot your password?</a>
+            <div class="tw-text-sm">
+              <a href="#" class="tw-font-medium tw-text-indigo-600 hover:tw-text-indigo-500">Forgot your password?</a>
             </div>
           </div>
         </template>
 
         <template v-else>
-          <div class="rounded-md shadow-sm -space-y-px">
+          <div class="tw-rounded-md tw-shadow-sm tw--space-y-px">
             <div>
               <input
                 v-model="registerPayload.email"
                 type="email"
                 autocomplete="email"
                 required
-                class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                class="tw-appearance-none tw-rounded-none tw-relative tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-placeholder-gray-500 tw-text-gray-900 tw-rounded-t-md focus:tw-outline-none focus:tw-ring-indigo-500 focus:tw-border-indigo-500 focus:tw-z-10 sm:tw-text-sm"
                 placeholder="Email address"
               />
             </div>
@@ -72,7 +81,7 @@
                 v-model="registerPayload.password"
                 type="password"
                 required
-                class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                class="tw-appearance-none tw-rounded-none tw-relative tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-placeholder-gray-500 tw-text-gray-900 tw-rounded-b-md focus:tw-outline-none focus:tw-ring-indigo-500 focus:tw-border-indigo-500 focus:tw-z-10 sm:tw-text-sm"
                 placeholder="Password"
               />
             </div>
@@ -82,7 +91,7 @@
                 v-model="registerPayload.name"
                 type="text"
                 required
-                class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                class="tw-appearance-none tw-rounded-none tw-relative tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-placeholder-gray-500 tw-text-gray-900 tw-rounded-b-md focus:tw-outline-none focus:tw-ring-indigo-500 focus:tw-border-indigo-500 focus:tw-z-10 sm:tw-text-sm"
                 placeholder="Your name"
               />
             </div>
@@ -92,9 +101,9 @@
         <div>
           <button
             @click="signButtonClick"
-            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            class="group tw-relative tw-w-full tw-flex tw-justify-center tw-py-2 tw-px-4 tw-border tw-border-transparent tw-text-sm tw-font-medium tw-rounded-md tw-text-white tw-bg-indigo-600 hover:tw-bg-indigo-700 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-indigo-500"
           >
-            <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+            <span class="tw-absolute tw-left-0 tw-inset-y-0 tw-flex tw-items-center tw-pl-3">
               <ion-icon name="lock-closed"></ion-icon>
             </span>
             Sign {{ isLoginForm ? 'in' : 'up' }}

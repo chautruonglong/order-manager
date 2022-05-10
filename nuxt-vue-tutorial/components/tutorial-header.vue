@@ -1,35 +1,35 @@
 <template>
-  <nav class="bg-gray-800 w-full">
-    <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-      <div class="relative flex items-center justify-between h-16">
-        <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+  <nav class="tw-bg-gray-800 tw-w-full">
+    <div class="tw-max-w-7xl tw-mx-auto tw-px-2 sm:tw-px-6 lg:tw-px-8">
+      <div class="tw-relative tw-flex tw-items-center tw-justify-between tw-h-16">
+        <div class="tw-absolute tw-inset-y-0 tw-left-0 tw-flex tw-items-center sm:tw-hidden">
           <button
-            class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+            class="tw-inline-flex tw-items-center tw-justify-center tw-p-2 tw-rounded-md tw-text-gray-400 hover:tw-text-white hover:tw-bg-gray-700 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-inset focus:tw-ring-white"
           >
             <ion-icon name="menu-outline" size="large"></ion-icon>
           </button>
         </div>
 
-        <div class="flex-1 flex items-center justify-start">
-          <a @click="lexLogoClick" class="hidden flex-shrink-0 sm:flex items-center">
-            <img class="h-8 w-auto" :src="lexLogo" alt="" />
+        <div class="tw-flex-1 tw-flex tw-items-center tw-justify-center sm:tw-items-stretch sm:tw-justify-start">
+          <a @click="lexLogoClick" class="tw-flex-shrink-0 tw-flex tw-items-center">
+            <img class="tw-h-8 tw-w-auto" :src="lexLogo" alt="" />
           </a>
 
-          <a @click="lexLogoClick" class="flex mx-auto flex-shrink-0 sm:hidden items-center">
-            <img class="h-8 w-auto" :src="lexLogo" alt="" />
-          </a>
-
-          <div class="hidden sm:block sm:ml-6">
-            <div class="flex space-x-4">
+          <div class="tw-hidden sm:tw-block sm:tw-ml-6">
+            <div class="tw-flex tw-space-x-4">
               <template v-for="(item, index) in navigation">
-                <a v-if="item.active" :key="index" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium">
+                <a
+                  v-if="item.active"
+                  :key="index"
+                  class="tw-bg-gray-900 tw-text-white tw-px-3 tw-py-2 tw-rounded-md tw-text-sm tw-font-medium"
+                >
                   {{ item.name }}
                 </a>
                 <a
                   v-else
                   :key="index"
                   @click="navigationItemClick(item)"
-                  class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  class="tw-text-gray-300 hover:tw-bg-gray-700 hover:tw-text-white tw-px-3 tw-py-2 tw-rounded-md tw-text-sm tw-font-medium"
                 >
                   {{ item.name }}
                 </a>
@@ -40,27 +40,33 @@
 
         <div
           v-if="isAuthenticated === true"
-          class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
+          class="tw-absolute tw-inset-y-0 tw-right-0 tw-flex tw-items-center tw-pr-2 sm:tw-static sm:tw-inset-auto sm:tw-ml-6 sm:tw-pr-0"
         >
           <button
             @click="cartButtonClick"
-            class="flex items-center bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+            class="tw-flex tw-items-center tw-bg-gray-800 tw-mr-5 tw-rounded-full tw-text-gray-400 hover:tw-text-white focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-offset-gray-800 focus:tw-ring-white"
           >
-            <ion-icon name="cart" class="h-6 w-6"></ion-icon>
+            <v-badge color="green" v-if="localBill != null && localBill.orders.length > 0" :content="localBill.orders.length">
+              <ion-icon name="cart" class="tw-h-6 tw-w-6"></ion-icon>
+            </v-badge>
+            <ion-icon name="cart" v-else class="tw-h-6 tw-w-6"></ion-icon>
           </button>
 
-          <div @click="isUserMenu = true" class="ml-3 relative cursor-pointer">
-            <v-avatar color="primary" size="36" class="hover:scale-110">LC</v-avatar>
+          <div @click="isUserMenu = true" class="tw-ml-3 tw-relative tw-cursor-pointer">
+            <v-avatar color="primary" size="36" class="hover:tw-scale-110">LC</v-avatar>
 
             <transition>
               <div
                 v-show="isUserMenu"
-                class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                class="tw-origin-top-right tw-absolute tw-right-0 tw-mt-2 tw-w-48 tw-rounded-md tw-shadow-lg tw-py-1 tw-bg-white tw-ring-1 tw-ring-black tw-ring-opacity-5 focus:tw-outline-none"
               >
                 <template v-for="(item, index) in userMenu">
-                  <a :key="index" @click="menuItemClick(item)" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-300">{{
-                    item
-                  }}</a>
+                  <a
+                    :key="index"
+                    @click="menuItemClick(item)"
+                    class="tw-block tw-px-4 tw-py-2 tw-text-sm tw-text-gray-700 hover:tw-bg-gray-300"
+                    >{{ item }}</a
+                  >
                 </template>
               </div>
             </transition>
@@ -70,7 +76,7 @@
         <div v-else>
           <nuxt-link
             to="/login"
-            class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-lg font-medium"
+            class="tw-text-gray-300 hover:tw-bg-gray-700 hover:tw-text-white tw-px-3 tw-py-2 tw-rounded-md tw-text-lg tw-font-medium"
           >
             Login
           </nuxt-link>
@@ -78,23 +84,29 @@
       </div>
     </div>
 
-    <div class="sm:hidden">
-      <div class="px-2 pt-2 pb-3 space-y-1">
+    <div class="sm:tw-hidden">
+      <div class="tw-px-2 tw-pt-2 tw-pb-3 tw-space-y-1">
         <template v-for="(item, index) in navigation">
-          <a v-if="item.active" :key="index" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium">
+          <a
+            v-if="item.active"
+            :key="index"
+            class="tw-bg-gray-900 tw-text-white tw-block tw-px-3 tw-py-2 tw-rounded-md tw-text-base tw-font-medium"
+          >
             {{ item.name }}
           </a>
           <a
             v-else
             :key="index"
             @click="navigationItemClick(item)"
-            class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+            class="tw-text-gray-300 hover:tw-bg-gray-700 hover:tw-text-white tw-block tw-px-3 tw-py-2 tw-rounded-md tw-text-base tw-font-medium"
           >
             {{ item.name }}
           </a>
         </template>
       </div>
     </div>
+
+    <tutorial-confirm ref="confirmDialog" />
   </nav>
 </template>
 
@@ -104,6 +116,7 @@ import { mapMutations, mapActions, mapGetters } from 'vuex'
 import { PRODUCT_MUTATIONS, PRODUCT_ACTIONS } from '@store/product'
 import { AUTH_GETTERS, AUTH_ACTIONS } from '@store/auth'
 import { COMMON_MUTATIONS } from '@store/common'
+import { BILL_GETTERS } from '@store/bill'
 
 interface Navigation {
   name: string
@@ -134,6 +147,7 @@ export default Vue.extend({
   computed: {
     ...mapGetters({
       isAuthenticated: AUTH_GETTERS.GET_IS_AUTHENTICATED,
+      localBill: BILL_GETTERS.GET_LOCAL_BILL,
     }),
   },
   methods: {
@@ -165,22 +179,26 @@ export default Vue.extend({
     },
 
     async lexLogoClick() {
-      this.mutateIsLoading(true)
-      this.navigation.forEach((item) => (item.active = false))
+      if (this.navigation.some((item) => item.active === true)) {
+        this.mutateIsLoading(true)
+        this.navigation.forEach((item) => (item.active = false))
 
-      this.mutatePage(0)
-      this.mutateProducts([])
-      this.mutateQuestion('')
+        this.mutatePage(0)
+        this.mutateProducts([])
+        this.mutateQuestion('')
 
-      await this.fetchProducts()
-      this.mutateIsLoading(false)
+        await this.fetchProducts()
+        this.mutateIsLoading(false)
+      }
     },
 
-    menuItemClick(item: string) {
+    async menuItemClick(item: string) {
       switch (item) {
         case userMenu[2]:
-          this.logout()
-          location.reload()
+          if (await (this.$refs.confirmDialog as any).active()) {
+            this.logout()
+            location.reload()
+          }
           break
       }
     },

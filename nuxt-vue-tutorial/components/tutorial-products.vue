@@ -1,28 +1,33 @@
 <template>
-  <div class="bg-white">
-    <div class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
-      <div class="flex items-center mb-12">
-        <ion-icon name="filter-outline" size="large" class="mr-2"></ion-icon>
-        <tutorial-combobox :items="orderItems" :itemClick="orderItemClick" class="mr-2" />
+  <div class="tw-bg-white">
+    <div class="tw-max-w-2xl tw-mx-auto tw-py-16 tw-px-4 sm:tw-py-24 sm:tw-px-6 lg:tw-max-w-7xl lg:tw-px-8">
+      <div class="tw-flex tw-items-center tw-mb-12">
+        <ion-icon name="filter-outline" size="large" class="tw-mr-2"></ion-icon>
+        <tutorial-combobox :items="orderItems" :itemClick="orderItemClick" class="tw-mr-2" />
         <tutorial-combobox :items="directionItems" :itemClick="directionItemClick" />
       </div>
 
-      <h2 class="text-2xl font-extrabold tracking-tight text-gray-900">Lex Shopee</h2>
+      <h2 class="tw-text-2xl tw-font-extrabold tw-tracking-tight tw-text-gray-900">Lex Shopee</h2>
 
-      <div class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+      <div class="tw-mt-6 tw-grid tw-grid-cols-1 tw-gap-y-10 tw-gap-x-6 sm:tw-grid-cols-2 lg:tw-grid-cols-4 xl:tw-gap-x-8">
         <template v-for="product in products">
           <tutorial-product-card :product="product" :key="product.id" />
         </template>
       </div>
     </div>
 
-    <div @click="moreButtonClick" class="flex justify-center mb-3 rounded-md shadow">
+    <div @click="moreButtonClick" class="tw-flex tw-justify-center tw-mb-3 tw-rounded-md tw-shadow">
       <button
-        class="flex items-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+        class="tw-flex tw-items-center tw-px-5 tw-py-3 tw-border tw-border-transparent tw-text-base tw-font-medium tw-rounded-md tw-text-white tw-bg-indigo-600 hover:tw-bg-indigo-700"
       >
-        <v-progress-circular v-if="isMoreClickLoading === true" indeterminate color="white" class="h-6 w-6"></v-progress-circular>
-        <ion-icon v-else name="arrow-down-circle-outline" class="h-6 w-6 font-bold"></ion-icon>
-        <span class="ml-3">More</span>
+        <v-progress-circular
+          v-if="isMoreClickLoading === true"
+          indeterminate
+          color="white"
+          class="tw-h-6 tw-w-6"
+        ></v-progress-circular>
+        <ion-icon v-else name="arrow-down-circle-outline" class="tw-h-6 tw-w-6 tw-font-bold"></ion-icon>
+        <span class="tw-ml-3">More</span>
       </button>
     </div>
 

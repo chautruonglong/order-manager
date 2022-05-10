@@ -2,59 +2,73 @@
   <div
     v-if="productModal != null"
     v-show="isShowProductModal === true"
-    class="fixed z-10 inset-0 overflow-y-auto h-full"
+    class="tw-fixed tw-z-10 tw-inset-0 tw-overflow-y-auto tw-h-full"
     role="dialog"
     aria-modal="true"
   >
-    <div class="flex min-h-screen text-center md:block md:px-2 lg:px-4" style="font-size: 0">
-      <div class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity md:block" aria-hidden="true"></div>
-      <span class="hidden md:inline-block md:align-middle md:h-screen" aria-hidden="true">&#8203;</span>
+    <div class="tw-flex tw-min-h-screen tw-text-center md:tw-block md:tw-px-2 lg:tw-px-4" style="font-size: 0">
+      <div
+        class="tw-hidden tw-fixed tw-inset-0 tw-bg-gray-500 tw-bg-opacity-75 tw-transition-opacity md:tw-block"
+        aria-hidden="true"
+      ></div>
+      <span class="tw-hidden md:tw-inline-block md:tw-align-middle md:tw-h-screen" aria-hidden="true">&#8203;</span>
 
       <div
-        class="flex text-base text-left transform transition w-full md:inline-block md:max-w-2xl md:px-4 md:my-8 md:align-middle lg:max-w-4xl"
+        class="tw-flex tw-text-base tw-text-left tw-transform tw-transition tw-w-full md:tw-inline-block md:tw-max-w-2xl md:tw-px-4 md:tw-my-8 md:tw-align-middle lg:tw-max-w-4xl"
       >
         <div
-          class="w-full relative flex flex-col items-center bg-white p-10 overflow-hidden shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8"
+          class="tw-w-full tw-relative tw-flex tw-flex-col tw-items-center tw-rounded-3xl tw-bg-white tw-p-10 tw-overflow-hidden tw-shadow-2xl sm:tw-px-6 sm:tw-pt-8 md:tw-p-6 lg:tw-p-8"
         >
-          <button @click="closeButtonClick" class="flex justify-end w-full mb-5text-gray-400 hover:text-gray-500">
+          <button @click="closeButtonClick" class="tw-flex tw-justify-end tw-w-full tw-mb-5text-gray-400 hover:tw-text-gray-500">
             <ion-icon name="close" size="large"></ion-icon>
           </button>
-          <div class="w-full grid grid-cols-1 gap-y-8 gap-x-6 items-start sm:grid-cols-12 lg:gap-x-8">
-            <div class="aspect-w-2 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden sm:col-span-4 lg:col-span-5">
-              <img :src="productModal.image" alt="" class="object-center object-cover" />
+          <div class="tw-w-full tw-grid tw-grid-cols-1 tw-gap-y-8 tw-gap-x-6 tw-items-start sm:tw-grid-cols-12 lg:tw-gap-x-8">
+            <div class="aspect-w-2 aspect-h-3 tw-bg-gray-100 tw-overflow-hidden sm:tw-col-span-4 lg:tw-col-span-5">
+              <img :src="productModal.image" alt="" class="tw-object-center tw-object-cover" />
             </div>
-            <div class="sm:col-span-8 lg:col-span-7 flex flex-col justify-between h-full">
-              <h2 class="text-2xl font-extrabold text-gray-900">{{ productModal.name }}</h2>
-              <div class="my-7">
-                <p class="text-2xl text-gray-900">
+            <div class="sm:tw-col-span-8 lg:tw-col-span-7 tw-flex tw-flex-col tw-justify-between tw-h-full">
+              <h2 class="tw-text-2xl tw-font-extrabold tw-text-gray-900">{{ productModal.name }}</h2>
+              <div class="tw-my-7">
+                <p class="tw-text-2xl tw-text-gray-900">
                   {{ productModal.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) }}
                 </p>
-                <span class="mt-1 pl-1 text-sm text-gray-500 border-solid border-2 border-indigo-100 bg-slate-200"
+                <span
+                  class="tw-mt-1 tw-pl-1 tw-text-sm tw-text-gray-500 tw-border-solid tw-border-2 tw-border-indigo-100 bg-slate-200"
                   >-{{ productModal.discount }}%</span
                 >
               </div>
-              <p class="w-full text-sm text-gray-500">{{ productModal.description }}</p>
-              <div class="flex items-align justify-between mt-5 w-full">
+              <p class="tw-w-full tw-text-sm tw-text-gray-500">{{ productModal.description }}</p>
+              <div v-if="isAuthenticated" class="tw-flex tw-justify-between tw-mt-5 tw-w-full">
                 <button
                   @click="deleteButtonClick"
-                  class="bg-red-600 border border-transparent rounded-md py-3 px-5 flex items-center justify-center text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                  class="tw-bg-red-600 tw-border tw-border-transparent tw-rounded-md tw-py-3 tw-px-5 tw-flex tw-items-center tw-justify-center tw-text-base tw-font-medium tw-text-white hover:tw-bg-red-700 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-red-500"
                 >
-                  <ion-icon name="trash-outline" class="text-xl"></ion-icon>
-                  <span class="ml-5">Delete</span>
+                  <ion-icon name="trash-outline" class="tw-text-xl"></ion-icon>
+                  <span class="tw-ml-5">Delete</span>
                 </button>
                 <button
                   @click="editButtonClick"
-                  class="bg-indigo-600 border border-transparent rounded-md py-3 px-5 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  class="tw-bg-indigo-600 tw-border tw-border-transparent tw-rounded-md tw-py-3 tw-px-5 tw-flex tw-items-center tw-justify-center tw-text-base tw-font-medium tw-text-white hover:tw-bg-indigo-700 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-indigo-500"
                 >
-                  <ion-icon name="create-outline" class="text-xl"></ion-icon>
-                  <span class="ml-5">Edit</span>
+                  <ion-icon name="create-outline" class="tw-text-xl"></ion-icon>
+                  <span class="tw-ml-5">Edit</span>
                 </button>
                 <button
                   @click="orderButtonClick"
-                  class="bg-indigo-600 border border-transparent rounded-md py-3 px-5 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  class="tw-bg-indigo-600 tw-border tw-border-transparent tw-rounded-md tw-py-3 tw-px-5 tw-flex tw-items-center tw-justify-center tw-text-base tw-font-medium tw-text-white hover:tw-bg-indigo-700 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-indigo-500"
                 >
-                  <ion-icon name="cart-outline" class="text-xl"></ion-icon>
-                  <span class="ml-5">Order</span>
+                  <ion-icon name="cart-outline" class="tw-text-xl"></ion-icon>
+                  <span class="tw-ml-5">Order</span>
+                </button>
+              </div>
+
+              <div v-else class="tw-flex tw-justify-end tw-mt-5 tw-w-full">
+                <button
+                  @click="loginFirstClick"
+                  class="tw-bg-indigo-600 tw-border tw-border-transparent tw-rounded-md tw-py-3 tw-px-5 tw-flex tw-items-center tw-justify-center tw-text-base tw-font-medium tw-text-white hover:tw-bg-indigo-700 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-indigo-500"
+                >
+                  <span class="tw-mr-5">Login First</span>
+                  <ion-icon name="arrow-forward-sharp" class="tw-w-6 tw-h-6"></ion-icon>
                 </button>
               </div>
             </div>
@@ -63,6 +77,7 @@
       </div>
     </div>
 
+    <tutorial-confirm ref="confirmDialog" />
     <tutorial-product-modification :product="{ ...productModal }" />
   </div>
 </template>
@@ -73,6 +88,7 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
 import { COMMON_GETTERS, COMMON_MUTATIONS } from '@store/common'
 import { PRODUCT_GETTERS, PRODUCT_ACTIONS } from '@store/product'
 import { BILL_ACTIONS } from '@store/bill'
+import { AUTH_GETTERS } from '@store/auth'
 
 export default Vue.extend({
   computed: {
@@ -80,6 +96,7 @@ export default Vue.extend({
       isShowProductModal: COMMON_GETTERS.GET_IS_SHOW_PRODUCT_MODAL,
       productModal: PRODUCT_GETTERS.GET_PRODUCT_MODAL,
       orderProducts: PRODUCT_GETTERS.GET_ORDER_PRODUCTS,
+      isAuthenticated: AUTH_GETTERS.GET_IS_AUTHENTICATED,
     }),
   },
   methods: {
@@ -100,15 +117,17 @@ export default Vue.extend({
     },
 
     async deleteButtonClick() {
-      try {
-        this.mutateIsLoading(true)
-        await this.deleteProduct(this.productModal.id)
-        this.mutateSnackbar('Delete successfully')
-      } catch (e: any) {
-        this.mutateSnackbar(e.message)
-      } finally {
-        this.mutateIsShowProductModal(false)
-        this.mutateIsLoading(false)
+      if (await (this.$refs.confirmDialog as any).active()) {
+        try {
+          this.mutateIsLoading(true)
+          await this.deleteProduct(this.productModal.id)
+          this.mutateSnackbar('Delete successfully')
+        } catch (e: any) {
+          this.mutateSnackbar(e.message)
+        } finally {
+          this.mutateIsShowProductModal(false)
+          this.mutateIsLoading(false)
+        }
       }
     },
 
@@ -125,6 +144,10 @@ export default Vue.extend({
       } finally {
         this.mutateIsShowProductModal(false)
       }
+    },
+
+    loginFirstClick() {
+      this.$router.push('/login')
     },
   },
 })

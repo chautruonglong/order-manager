@@ -2,90 +2,105 @@
   <div
     v-if="product != null"
     v-show="isShowProductModification === true"
-    class="fixed z-10 inset-0 overflow-y-auto"
+    class="tw-fixed tw-z-10 tw-inset-0 tw-overflow-y-auto"
     role="dialog"
     aria-modal="true"
   >
-    <div class="flex min-h-screen text-center md:block md:px-2 lg:px-4" style="font-size: 0">
-      <div class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity md:block" aria-hidden="true"></div>
-      <span class="hidden md:inline-block md:align-middle md:h-screen" aria-hidden="true">&#8203;</span>
+    <div class="tw-flex tw-min-h-screen tw-text-center md:tw-block md:tw-px-2 lg:tw-px-4" style="font-size: 0">
+      <div
+        class="tw-hidden tw-fixed tw-inset-0 tw-bg-gray-500 tw-bg-opacity-75 tw-transition-opacity md:tw-block"
+        aria-hidden="true"
+      ></div>
+      <span class="tw-hidden md:tw-inline-block md:tw-align-middle md:tw-h-screen" aria-hidden="true">&#8203;</span>
 
       <div
-        class="flex text-base text-left transform transition w-full md:inline-block md:max-w-2xl md:px-4 md:my-8 md:align-middle lg:max-w-4xl"
+        class="tw-flex tw-text-base tw-text-left tw-transform tw-transition tw-w-full md:tw-inline-block md:tw-max-w-2xl md:tw-px-4 md:tw-my-8 md:tw-align-middle lg:tw-max-w-4xl"
       >
         <div
-          class="flex flex-col justify-start w-full items-center bg-white px-4 pt-14 pb-8 overflow-hidden shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8"
+          class="tw-flex tw-flex-col tw-justify-start tw-w-full tw-items-center tw-rounded-3xl tw-bg-white tw-px-4 tw-pt-14 tw-pb-8 tw-overflow-hidden tw-shadow-2xl sm:tw-px-6 sm:tw-pt-8 md:tw-p-6 lg:tw-p-8"
         >
-          <div class="flex items-center justify-between w-full mb-3">
-            <p class="text-2xl font-extrabold text-indigo-600">Update Product</p>
-            <button @click="closeButtonClick" type="button" class="text-gray-400 hover:text-gray-500">
+          <div class="tw-flex tw-items-center tw-justify-between tw-w-full tw-mb-3">
+            <p class="tw-text-2xl tw-font-extrabold tw-text-indigo-600">Update Product</p>
+            <button @click="closeButtonClick" type="button" class="tw-text-gray-400 hover:tw-text-gray-500">
               <ion-icon name="close" size="large"></ion-icon>
             </button>
           </div>
 
-          <div class="w-full">
-            <div class="w-full mb-3">
-              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"> Name </label>
+          <div class="tw-w-full">
+            <div class="tw-w-full tw-mb-3">
+              <label class="tw-block tw-uppercase tw-tracking-wide tw-text-gray-700 tw-text-xs tw-font-bold tw-mb-1">
+                Name
+              </label>
               <input
-                class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white"
+                class="tw-appearance-none tw-block tw-w-full tw-bg-gray-200 tw-text-gray-700 tw-border tw-rounded tw-py-3 tw-px-4 tw-mb-1 tw-leading-tight focus:tw-outline-none focus:tw-bg-white"
                 type="text"
                 v-model="product.name"
               />
             </div>
 
-            <div class="flex items-center justify-between w-full mb-3">
-              <div class="w-1/2 mr-5">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"> Price (VNĐ) </label>
+            <div class="tw-flex tw-items-center tw-justify-between tw-w-full tw-mb-3">
+              <div class="tw-w-1/2 tw-mr-5">
+                <label class="tw-block tw-uppercase tw-tracking-wide tw-text-gray-700 tw-text-xs tw-font-bold tw-mb-1">
+                  Price (VNĐ)
+                </label>
                 <input
-                  class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white"
+                  class="tw-appearance-none tw-block tw-w-full tw-bg-gray-200 tw-text-gray-700 tw-border tw-rounded tw-py-3 tw-px-4 tw-mb-1 tw-leading-tight focus:tw-outline-none focus:tw-bg-white"
                   type="text"
                   v-model="product.price"
                 />
               </div>
-              <div class="w-1/2 ml-5">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"> Discount (%) </label>
+              <div class="tw-w-1/2 tw-ml-5">
+                <label class="tw-block tw-uppercase tw-tracking-wide tw-text-gray-700 tw-text-xs tw-font-bold tw-mb-1">
+                  Discount (%)
+                </label>
                 <input
-                  class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white"
+                  class="tw-appearance-none tw-block tw-w-full tw-bg-gray-200 tw-text-gray-700 tw-border tw-rounded tw-py-3 tw-px-4 tw-mb-1 tw-leading-tight focus:tw-outline-none focus:tw-bg-white"
                   type="text"
                   v-model="product.discount"
                 />
               </div>
             </div>
 
-            <div class="w-full mb-3">
-              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"> Description </label>
+            <div class="tw-w-full tw-mb-3">
+              <label class="tw-block tw-uppercase tw-tracking-wide tw-text-gray-700 tw-text-xs tw-font-bold tw-mb-1">
+                Description
+              </label>
               <textarea
-                class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white"
+                class="tw-appearance-none tw-block tw-w-full tw-bg-gray-200 tw-text-gray-700 tw-border tw-rounded tw-py-3 tw-px-4 tw-mb-1 tw-leading-tight focus:tw-outline-none focus:tw-bg-white"
                 placeholder="Description"
                 v-model="product.description"
               ></textarea>
             </div>
 
-            <div class="flex justify-start w-full mb-3">
-              <div class="w-96">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"> Image </label>
+            <div class="tw-flex tw-justify-start tw-w-full tw-mb-3">
+              <div class="tw-w-96">
+                <label class="tw-block tw-uppercase tw-tracking-wide tw-text-gray-700 tw-text-xs tw-font-bold tw-mb-1">
+                  Image
+                </label>
                 <input
                   ref="fileImageModification"
-                  class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                  class="form-control tw-block tw-w-full tw-px-3 tw-py-1.5 tw-text-base tw-font-normal tw-text-gray-700 tw-bg-white tw-bg-clip-padding tw-border tw-border-solid tw-border-gray-300 tw-rounded tw-transition tw-ease-in-out tw-m-0 focus:tw-text-gray-700 focus:tw-bg-white focus:tw-border-blue-600 focus:tw-outline-none"
                   type="file"
                   @change="onFileChange"
                 />
               </div>
             </div>
 
-            <div class="flex justify-end w-full">
+            <div class="tw-flex tw-justify-end tw-w-full">
               <button
                 @click="updateButtonClick"
-                class="w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                class="tw-w-full tw-bg-indigo-600 tw-border tw-border-transparent tw-rounded-md tw-py-3 tw-px-8 tw-flex tw-items-center tw-justify-center tw-text-base tw-font-medium tw-text-white hover:tw-bg-indigo-700 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-indigo-500"
               >
-                <ion-icon name="arrow-up-outline" class="text-xl"></ion-icon>
-                <span class="ml-5">Update</span>
+                <ion-icon name="arrow-up-outline" class="tw-text-xl"></ion-icon>
+                <span class="tw-ml-5">Update</span>
               </button>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <tutorial-confirm ref="confirmDialog" />
   </div>
 </template>
 
@@ -127,25 +142,27 @@ export default Vue.extend({
     },
 
     async updateButtonClick() {
-      try {
-        this.mutateIsLoading(true)
-        const formData = new FormData()
-        formData.append('name', this.product.name)
-        formData.append('description', this.product.description)
-        formData.append('price', this.product.price.toString())
-        formData.append('discount', this.product.discount.toString())
-        formData.append('image', this.product.image)
-        await this.updateProduct({ id: this.product.id, product: formData })
-        this.mutateSnackbar('Post new product successfully')
-      } catch (e: any) {
-        this.mutateSnackbar(e.message)
-      } finally {
-        this.mutateIsLoading(false)
-        this.mutateIsShowProductModification(false)
-        this.mutateIsShowProductModal(false)
+      if (await (this.$refs.confirmDialog as any).active()) {
+        try {
+          this.mutateIsLoading(true)
+          const formData = new FormData()
+          formData.append('name', this.product.name)
+          formData.append('description', this.product.description)
+          formData.append('price', this.product.price.toString())
+          formData.append('discount', this.product.discount.toString())
+          formData.append('image', this.product.image)
+          await this.updateProduct({ id: this.product.id, product: formData })
+          this.mutateSnackbar('Post new product successfully')
+        } catch (e: any) {
+          this.mutateSnackbar(e.message)
+        } finally {
+          this.mutateIsLoading(false)
+          this.mutateIsShowProductModification(false)
+          this.mutateIsShowProductModal(false)
 
-        const input = this.$refs.fileImageModification as HTMLInputElement
-        input.value = ''
+          const input = this.$refs.fileImageModification as HTMLInputElement
+          input.value = ''
+        }
       }
     },
   },
