@@ -8,6 +8,6 @@ namespace AspNet.Tutorial.Core.DataTransfers.Bills
     {
         public double Total { get; set; }
         
-        public IEnumerable<OrderCreationDto> Orders { get; set; }
+        public IEnumerable<OrderProductCreationDto> Orders { get; set; }
     }
 }

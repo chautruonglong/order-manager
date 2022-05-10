@@ -45,7 +45,7 @@ namespace AspNet.Tutorial.Core.Services
                 orders.Add( new Order
                 {
                     UserId = userId,
-                    ProductId = orderCreationDto.ProductId,
+                    ProductId = orderCreationDto.Product.Id,
                     BillId = bill.Id,
                     Quantity = orderCreationDto.Quantity
                 });
@@ -54,23 +54,26 @@ namespace AspNet.Tutorial.Core.Services
             await _orderRepository.InsertMany(orders);
         }
 
-        public async Task<BillOrderDto> GetBillOrders(Guid userId, int page, int size)
+        public async Task<IEnumerable<BillOrderDto>> GetBillOrders(Guid userId, int page, int size)
         {
             var orders = await _orderRepository.GetMany(page, size, o => o.ModifiedAt, SortDirections.Desc)
                 .Where(o => o.UserId.Equals(userId))
                 .Include(o => o.Bill)
                 .Include(o => o.Product)
                 .ToListAsync();
-
+            
             if (orders == null)
             {
                 return null;
             }
             
-            var billOrderDto = _mapper.Map<BillOrderDto>(orders.First().Bill);
-            billOrderDto.Orders = _mapper.Map<IEnumerable<OrderProductDto>>(orders);
+            var bills = new HashSet<Bill>();
+            orders.ForEach(o => bills.Add(o.Bill));
             
-            return billOrderDto;
+            var billOrderDtoList = _mapper.Map<List<BillOrderDto>>(bills.ToList());
+            billOrderDtoList.ForEach(bill => bill.Orders = _mapper.Map<IEnumerable<OrderProductDto>>(orders.FindAll(o => o.Bill.Id == bill.Id)));
+
+            return billOrderDtoList;
         }
     }
 }

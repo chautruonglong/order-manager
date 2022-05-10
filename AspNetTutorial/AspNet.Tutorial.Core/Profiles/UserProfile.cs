@@ -14,6 +14,8 @@ namespace AspNet.Tutorial.Core.Profiles
 
             CreateMap<UserRegisterDto, User>();
 
+            CreateMap<User, UserDto>();
+
             CreateMap<User, User>()
                 .ForMember(e => e.Id, option => option.Ignore())
                 .ForMember(e => e.CreatedBy, option => option.Ignore())
