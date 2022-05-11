@@ -164,7 +164,8 @@ export default Vue.extend({
         this.mutateIsLoading(true)
         if (this.isLoginForm) {
           await this.login(this.loginPayload)
-          location.replace('/')
+          const redirectLink = this.$route.query.redirectLink as string
+          location.replace(redirectLink || '/')
           this.mutateSnackbar('Login successfully')
         } else {
           await this.register(this.registerPayload)
