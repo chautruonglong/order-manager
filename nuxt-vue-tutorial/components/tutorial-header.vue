@@ -134,7 +134,7 @@ const navigation: Navigation[] = [
   { name: 'Clothes', value: 'áo', active: false },
   { name: 'Books', value: 'sách', active: false },
   { name: 'Phones', value: 'điện thoại', active: false },
-  { name: 'laptops', value: 'máy tính', active: false },
+  { name: 'Laptops', value: 'máy tính', active: false },
 ]
 
 const lexLogo = '/lex-logo.svg'
