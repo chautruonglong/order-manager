@@ -26,6 +26,9 @@ export default async ({ store, route, redirect }: Context) => {
         }
       }
     } catch {
+      if (currentPath !== '/' && currentPath !== '/login') {
+        redirect('/login')
+      }
       store.commit(AUTH_MUTATIONS.MUTATE_IS_AUTHENTICATED, false, { root: true })
     }
   }
